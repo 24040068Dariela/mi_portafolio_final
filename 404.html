@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página no encontrada | Portafolio de Evidencias</title>
+    
+    <!-- Metas SEO -->
+    <meta name="description" content="Portafolio de evidencias académicas">
+    <meta name="author" content="Paola Esmeralda Pérez Granados & Karol Dariela Vazquez Telles">
+    <meta name="keywords" content="framework, desarrollo web, portafolio, evidencia, Frameworks">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#6B3F69',
+                        'secondary': '#8D5F8C',
+                        'accent': '#A376A2',
+                        'light': '#DDC3C3',
+                        'dark': '#4A2D49',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'system-ui', 'sans-serif'],
+                        'inter': ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Estilos propios -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    
+    <style>
+        :root {
+            --color-primary: #6B3F69;
+            --color-secondary: #8D5F8C;
+            --color-accent: #A376A2;
+            --color-light: #DDC3C3;
+            --color-dark: #4A2D49;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8 text-center">
+            <div>
+                <div class="mx-auto h-32 w-32 text-primary">
+                    <i class="fas fa-exclamation-triangle text-8xl"></i>
+                </div>
+                <h2 class="mt-6 text-6xl font-extrabold text-gray-900">404</h2>
+                <h3 class="mt-4 text-3xl font-bold text-secondary">Página no encontrada</h3>
+                <p class="mt-4 text-lg text-gray-600">
+                    Lo sentimos, la página que estás buscando no existe o ha sido movida.
+                </p>
+                <div class="mt-8">
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-info-circle text-yellow-400"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-yellow-700">
+                                    URL solicitada: <code class="bg-gray-100 px-2 py-1 rounded"><?php echo $_SERVER['REQUEST_URI']; ?></code>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 space-y-4">
+                <a href="index.html" class="bg-primary hover:bg-secondary text-white font-bold py-3 px-8 rounded-lg transition duration-300 inline-flex items-center">
+                    <i class="fas fa-home mr-2"></i> Volver al Inicio
+                </a>
+                <div class="text-sm">
+                    <p class="text-gray-500">¿Buscas algo específico?</p>
+                    <div class="mt-2 flex flex-wrap justify-center gap-2">
+                        <a href="unidades/unidad1.html" class="text-primary hover:text-secondary">Unidad 1</a>
+                        <a href="unidades/unidad2.html" class="text-primary hover:text-secondary">Unidad 2</a>
+                        <a href="unidades/unidad3.html" class="text-primary hover:text-secondary">Unidad 3</a>
+                        <a href="about.html" class="text-primary hover:text-secondary">Acerca</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-gray-200">
+                <p class="text-sm text-gray-500">
+                    Si crees que esto es un error, por favor 
+                    <a href="about.html" class="font-medium text-primary hover:text-secondary">contáctanos</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Configuración y scripts -->
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <!-- Scripts adicionales por página -->
+    <script>
+        // Configuración específica de la página (opcional)
+        const pageConfig = {
+            title: "Unidad 1 - Frontend",
+            description: "Fundamentos de desarrollo frontend"
+        };
+        
+        // Actualizar título si es necesario
+        document.title = pageConfig.title + " | " + PortafolioConfig.SITIO_NOMBRE;
+    </script>
+</body>
+</html>
