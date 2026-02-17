@@ -1,9 +1,6 @@
 // Funcionalidades principales del portafolio
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Detectar página activa y resaltar en navbar
-    highlightActiveNavLink();
-    
     // Inicializar animaciones
     initAnimations();
     
@@ -12,27 +9,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Inicializar formularios
     initForms();
-});
-
-// Resaltar enlace activo en navbar
-function highlightActiveNavLink() {
-    const currentPage = window.location.pathname.split('/').pop();
-    const navLinks = document.querySelectorAll('nav a');
     
-    navLinks.forEach(link => {
-        const linkHref = link.getAttribute('href');
-        if (linkHref === currentPage || 
-            (currentPage === '' && linkHref === 'index.html') ||
-            (currentPage === 'index.html' && linkHref === 'index.html')) {
-            link.classList.add('nav-active');
-            link.setAttribute('aria-current', 'page');
-        }
-    });
-}
+    // Smooth scroll para enlaces internos
+    initSmoothScroll();
+    
+    // Inicializar sistema de navegación centralizado
+    initNavigation();
+});
 
 // Inicializar animaciones
 function initAnimations() {
-    // Animar elementos al hacer scroll
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -46,8 +32,7 @@ function initAnimations() {
         });
     }, observerOptions);
     
-    // Observar elementos con clase 'card' y 'section-title'
-    document.querySelectorAll('.card, .section-title, .feature-item').forEach(el => {
+    document.querySelectorAll('.card, .section-title, .feature-item, .bg-white').forEach(el => {
         observer.observe(el);
     });
 }
@@ -95,7 +80,6 @@ function initForms() {
     
     forms.forEach(form => {
         form.addEventListener('submit', function(e) {
-            // Validación básica
             const requiredFields = this.querySelectorAll('[required]');
             let isValid = true;
             
@@ -116,6 +100,23 @@ function initForms() {
     });
 }
 
+// Smooth scroll para enlaces internos
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+}
+
 // Función para mostrar/ocultar contenido
 function toggleContent(elementId) {
     const element = document.getElementById(elementId);
@@ -127,28 +128,68 @@ function toggleContent(elementId) {
 // Función para copiar al portapapeles
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
-        alert('Texto copiado al portapapeles: ' + text);
+        alert('Texto copiado al portapapeles');
     }).catch(err => {
         console.error('Error al copiar: ', err);
     });
 }
 
-// Smooth scroll para enlaces internos
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        if (targetId !== '#') {
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
+console.log('Portafolio Framework cargado correctamente');
+
+// Inicializa navegación centralizada: asigna hrefs y click handlers a botones/links comunes
+function initNavigation() {
+    if (typeof PortafolioConfig === 'undefined') return;
+
+    const map = {
+        // Header
+        'logo-link': 'index.html',
+        'nav-inicio': 'index.html',
+        'nav-unidad1': 'unidades/unidad1.html',
+        'nav-unidad2': 'unidades/unidad2.html',
+        'nav-unidad3': 'unidades/unidad3.html',
+        'nav-about': 'about.html',
+
+        // Footer
+        'footer-inicio': 'index.html',
+        'footer-unidad1': 'unidades/unidad1.html',
+        'footer-unidad2': 'unidades/unidad2.html',
+        'footer-unidad3': 'unidades/unidad3.html',
+        'footer-about': 'about.html',
+
+        // Contenido / botones
+        'btn-explorar-unidades': '#unidades',
+        'btn-unidad1': 'unidades/unidad1.html',
+        'btn-unidad2': 'unidades/unidad2.html',
+        'btn-unidad3': 'unidades/unidad3.html',
+        'btn-volver-inicio': 'index.html',
+        'btn-siguiente-unidad2': 'unidades/unidad2.html',
+        'btn-unidad-anterior': 'unidades/unidad1.html',
+        'btn-inicio': 'index.html'
+    };
+
+    Object.keys(map).forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const path = map[id];
+
+        // Si es ancla interna (hash), mantenerlo como tal
+        if (typeof path === 'string' && path.startsWith('#')) {
+            el.setAttribute('href', path);
+            return;
+        }
+
+        // Construir URL absoluta usando PortafolioConfig
+        const url = PortafolioConfig.url(path);
+
+        // Si el elemento es un enlace, asignar href
+        if (el.tagName.toLowerCase() === 'a') {
+            el.setAttribute('href', url);
+        } else {
+            // Si es otro tipo de elemento (button, div), asignar click
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = url;
+            });
         }
     });
-});
-
-// Log cuando se carga la página
-console.log('Portafolio Framework cargado correctamente');
+}
