@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unidad 2 - Backend | Portafolio de Evidencias</title>
     
+    <!-- Metas SEO -->
+    <meta name="description" content="Portafolio de evidencias académicas - Unidad 2: Proceso de Desarrollo Back-End Web">
+    <meta name="author" content="Paola Esmeralda Pérez Granados & Karol Dariela Vazquez Telles">
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -16,11 +20,6 @@
                         'secondary': '#8D5F8C',
                         'accent': '#A376A2',
                         'light': '#DDC3C3',
-                        'dark': '#4A2D49',
-                    },
-                    fontFamily: {
-                        'poppins': ['Poppins', 'system-ui', 'sans-serif'],
-                        'inter': ['Inter', 'system-ui', 'sans-serif'],
                     }
                 }
             }
@@ -31,18 +30,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Estilos inline básicos -->
+    <!-- CSS principal (ruta relativa subiendo un nivel) -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    
+    <!-- Favicon (ruta relativa subiendo un nivel) -->
+    <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
+    
     <style>
         :root {
             --color-primary: #6B3F69;
             --color-secondary: #8D5F8C;
             --color-accent: #A376A2;
             --color-light: #DDC3C3;
-            --color-dark: #4A2D49;
         }
         
         body {
@@ -54,300 +55,862 @@
             color: #374151;
         }
         
-        .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            font-size: 1.5rem;
+        .content-wrapper {
+            flex: 1;
+        }
+        
+        /* Estilos para el acordeón */
+        .tema-principal {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tema-principal:hover {
+            background-color: rgba(107, 63, 105, 0.05);
+        }
+        
+        .subtema-item {
+            transition: all 0.3s ease;
+        }
+        
+        .subtema-item:hover {
+            background-color: rgba(107, 63, 105, 0.05);
+            transform: translateX(5px);
+        }
+        
+        .fa-chevron-right {
+            transition: transform 0.3s ease;
+        }
+        
+        .rotate-90 {
+            transform: rotate(90deg);
+        }
+        
+        .subtemas {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .highlighted {
+            background-color: rgba(107, 63, 105, 0.1);
+            border-left: 4px solid var(--color-primary);
+            padding-left: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            display: block;
+            overflow-x: auto;
+            padding: 1rem;
+            line-height: 1.5;
+        }
+        
+        /* Estilos para badges de subtemas */
+        .badge-subitem {
+            display: inline-block;
+            background-color: rgba(107, 63, 105, 0.1);
             color: var(--color-primary);
-        }
-        
-        .loading-spinner {
-            border: 4px solid rgba(107, 63, 105, 0.1);
-            border-left-color: var(--color-primary);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin-right: 1rem;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
         }
     </style>
 </head>
 <body>
-    <!-- Pantalla de carga -->
-    <div id="loading-screen" class="loading">
-        <div class="loading-spinner"></div>
-        <span>Cargando Portafolio...</span>
-    </div>
-    
-    <!-- Contenido específico de unidad2.html -->
-    <div id="page-content" style="display: none;">
-        <!-- Banner de la unidad -->
-        <div class="relative h-72 bg-gradient-to-r from-secondary to-accent">
-            <div class="absolute inset-0 opacity-20">
-                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80" 
-                     alt="Backend Development" class="w-full h-full object-cover">
-            </div>
-            <div class="relative container mx-auto px-4 h-full flex items-center">
-                <div class="max-w-3xl">
-                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Unidad 2: Proceso de Desarrollo de Backend</h1>
-                    <p class="text-light text-xl">Lógica del servidor, APIs y bases de datos</p>
-                    <div class="mt-6 flex flex-wrap gap-2">
-                        <span class="bg-white/20 px-3 py-1 rounded-full text-sm">PHP</span>
-                        <span class="bg-white/20 px-3 py-1 rounded-full text-sm">MySQL</span>
-                        <span class="bg-white/20 px-3 py-1 rounded-full text-sm">APIs REST</span>
-                        <span class="bg-white/20 px-3 py-1 rounded-full text-sm">Autenticación</span>
-                        <span class="bg-white/20 px-3 py-1 rounded-full text-sm">Seguridad</span>
+    <!-- ==================== HEADER INCRUSTADO ==================== -->
+    <header class="site-header fixed top-0 left-0 right-0 text-white z-50 py-3" style="background: rgba(107, 63, 105, 0.95); backdrop-filter: blur(10px);">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <!-- Logo y nombre del sitio -->
+                <div class="flex items-center space-x-3 mb-3 md:mb-0">
+                    <div class="bg-light p-2 rounded-lg">
+                        <i class="fas fa-code text-primary text-xl"></i>
                     </div>
+                    <div>
+                        <a href="../index.html" class="text-xl font-bold hover:text-light transition">
+                            Portafolio de Evidencias
+                        </a>
+                        <p class="text-light text-xs">Frameworks</p>
+                    </div>
+                </div>
+
+                <!-- Navegación principal con rutas relativas (desde subcarpeta) -->
+                <nav class="w-full md:w-auto">
+                    <ul class="flex flex-wrap justify-center md:justify-end space-x-2">
+                        <li><a href="../index.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center"><i class="fas fa-home mr-1"></i><span class="hidden md:inline">Inicio</span></a></li>
+                        <li><a href="unidad1.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center"><i class="fas fa-palette mr-1"></i><span class="hidden md:inline">Unidad 1</span></a></li>
+                        <li><a href="unidad2.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center"><i class="fas fa-server mr-1"></i><span class="hidden md:inline">Unidad 2</span></a></li>
+                        <li><a href="unidad3.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center"><i class="fas fa-shield-alt mr-1"></i><span class="hidden md:inline">Unidad 3</span></a></li>
+                        <li><a href="../about.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center"><i class="fas fa-info-circle mr-1"></i><span class="hidden md:inline">Acerca</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Espacio para el header fijo -->
+    <div class="header-spacer" style="height: 80px;"></div>
+
+    <!-- Contenedor principal -->
+    <main class="content-wrapper">
+    <!-- ==================== FIN DEL HEADER ==================== -->
+
+        <!-- Contenido específico de la Unidad 2 -->
+        <section class="py-8">
+            <div class="container mx-auto px-4">
+                <div class="max-w-6xl mx-auto">
+                    <!-- Encabezado de la unidad -->
+                    <div class="bg-gradient-to-r from-secondary to-accent rounded-2xl p-8 mb-8 text-white">
+                        <h1 class="text-3xl md:text-4xl font-bold mb-4">Unidad 2: Proceso de Desarrollo Back-End Web</h1>
+                        <p class="text-light text-xl">Lógica del servidor, APIs, bases de datos y frameworks backend</p>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm">Node.js</span>
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm">Express</span>
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm">MVC</span>
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm">Bases de Datos</span>
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm">APIs REST</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Contenido principal con sidebar -->
+                    <div class="flex flex-col lg:flex-row gap-8">
+                        <!-- Sidebar de navegación con acordeón -->
+                        <div class="lg:w-1/4">
+                            <div class="card overflow-hidden sticky top-24">
+                                <div class="bg-primary text-white p-4">
+                                    <h3 class="text-lg font-bold">Temas de la Unidad</h3>
+                                </div>
+                                <div class="p-0">
+                                    <!-- Tema 1: Fundamentos de Backend -->
+                                    <div class="border-b border-gray-100">
+                                        <div class="tema-principal flex items-center justify-between p-4 hover:bg-gray-50" data-target="subtemas-fundamentos">
+                                            <div class="flex items-center">
+                                                <span class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3">1</span>
+                                                <span class="font-medium">Fundamentos de Backend</span>
+                                            </div>
+                                            <i class="fas fa-chevron-right text-gray-400 text-sm"></i>
+                                        </div>
+                                        
+                                        <div id="subtemas-fundamentos" class="subtemas hidden ml-8 space-y-1 border-l border-gray-200 pl-4 py-2 mr-2">
+                                            <a href="#concepto-backend" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">a. Concepto de frameworks backend</a>
+                                            <a href="#tipos-backend" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">b. Tipos de frameworks backend</a>
+                                            <a href="#herramientas-backend" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">c. Herramientas del framework</a>
+                                            <a href="#instalacion-backend" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">d. Instalación y configuración</a>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Tema 2: Diseño Backend -->
+                                    <div class="border-b border-gray-100">
+                                        <div class="tema-principal flex items-center justify-between p-4 hover:bg-gray-50" data-target="subtemas-diseno-backend">
+                                            <div class="flex items-center">
+                                                <span class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3">2</span>
+                                                <span class="font-medium">Diseño Backend</span>
+                                            </div>
+                                            <i class="fas fa-chevron-right text-gray-400 text-sm"></i>
+                                        </div>
+                                        
+                                        <div id="subtemas-diseno-backend" class="subtemas hidden ml-8 space-y-1 border-l border-gray-200 pl-4 py-2 mr-2">
+                                            <a href="#elementos-backend" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">a. Elementos del framework backend</a>
+                                            <div class="ml-4 space-y-1 mt-1 mb-1">
+                                                <a href="#mvc" class="subtema-item block p-1 pl-4 hover:bg-gray-50 rounded text-xs text-gray-600">i. ¿Qué es MVC?</a>
+                                                <a href="#migraciones" class="subtema-item block p-1 pl-4 hover:bg-gray-50 rounded text-xs text-gray-600">ii. Migraciones</a>
+                                                <a href="#modelos-bd" class="subtema-item block p-1 pl-4 hover:bg-gray-50 rounded text-xs text-gray-600">iii. Modelos de Bases de Datos</a>
+                                                <a href="#vistas-rutas" class="subtema-item block p-1 pl-4 hover:bg-gray-50 rounded text-xs text-gray-600">iv. Vistas y rutas</a>
+                                                <a href="#controladores" class="subtema-item block p-1 pl-4 hover:bg-gray-50 rounded text-xs text-gray-600">v. Controladores</a>
+                                            </div>
+                                            <a href="#ui-ux-backend" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">b. UI/UX/IXD en backend</a>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Tema 3: Desarrollo de Backend -->
+                                    <div class="border-b border-gray-100">
+                                        <div class="tema-principal flex items-center justify-between p-4 hover:bg-gray-50" data-target="subtemas-desarrollo">
+                                            <div class="flex items-center">
+                                                <span class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3">3</span>
+                                                <span class="font-medium">Desarrollo de Backend</span>
+                                            </div>
+                                            <i class="fas fa-chevron-right text-gray-400 text-sm"></i>
+                                        </div>
+                                        
+                                        <div id="subtemas-desarrollo" class="subtemas hidden ml-8 space-y-1 border-l border-gray-200 pl-4 py-2 mr-2">
+                                            <a href="#gestor-bd" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">a. Gestor de base de datos</a>
+                                            <a href="#modelos-conceptuales" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">b. Modelos conceptuales de BD</a>
+                                            <a href="#diseno-interfaces" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">c. Diseños de interfaces de usuario</a>
+                                            <a href="#funcionalidad-framework" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">d. Funcionalidad con el framework</a>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Saber Hacer -->
+                                    <div>
+                                        <a href="#saberhacer" class="flex items-center justify-between p-4 hover:bg-gray-50">
+                                            <div class="flex items-center">
+                                                <span class="bg-accent text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3">
+                                                    <i class="fas fa-code text-xs"></i>
+                                                </span>
+                                                <span class="font-medium">Saber Hacer</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Contenido principal -->
+                        <div class="lg:w-3/4">
+                            <div class="card p-8">
+                                <!-- Breadcrumb con rutas relativas -->
+                                <nav class="flex mb-6" aria-label="Breadcrumb">
+                                    <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                                        <li class="inline-flex items-center">
+                                            <a href="../index.html" class="inline-flex items-center text-sm text-gray-700 hover:text-primary">
+                                                <i class="fas fa-home mr-2"></i> Inicio
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-chevron-right text-gray-400 mx-2"></i>
+                                                <span class="ml-1 text-sm text-gray-700 md:ml-2">Unidad 2</span>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </nav>
+                                
+                                <!-- CONTENIDO DE LA UNIDAD 2 -->
+                                <div id="contenido-tema">
+                                    <!-- ======================================== -->
+                                    <!-- TEMA 1: FUNDAMENTOS DE BACKEND -->
+                                    <!-- ======================================== -->
+                                    <div id="fundamentos-backend" class="mb-16 scroll-mt-24">
+                                        <h2 class="text-2xl font-bold text-primary mb-6">1. Fundamentos de Backend</h2>
+                                        
+                                        <!-- Subtema a: Concepto de frameworks backend -->
+                                        <div id="concepto-backend" class="mb-12 scroll-mt-24">
+                                            <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
+                                                <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">a</span>
+                                                Concepto de frameworks de backend web
+                                            </h3>
+                                            <div class="bg-gray-50 rounded-xl p-6 mb-4">
+                                                <p class="text-gray-700 mb-4">
+                                                    Un <strong>framework de backend</strong> es una plataforma de software que proporciona una estructura base para desarrollar la lógica del servidor de aplicaciones web. Estos frameworks facilitan tareas como el enrutamiento, la gestión de bases de datos, la autenticación de usuarios y la creación de APIs.
+                                                </p>
+                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                                                    <div class="p-4 bg-white rounded-lg border border-gray-200">
+                                                        <h4 class="font-bold text-primary mb-2">Funciones principales:</h4>
+                                                        <ul class="text-gray-600 space-y-1">
+                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Gestión de peticiones HTTP</li>
+                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Conexión con bases de datos</li>
+                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Autenticación y autorización</li>
+                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Manejo de sesiones</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="p-4 bg-white rounded-lg border border-gray-200">
+                                                        <h4 class="font-bold text-primary mb-2">Ejemplos populares:</h4>
+                                                        <ul class="text-gray-600 space-y-1">
+                                                            <li><i class="fab fa-node text-green-600 mr-2"></i>Express.js (Node.js)</li>
+                                                            <li><i class="fab fa-python text-blue-600 mr-2"></i>Django (Python)</li>
+                                                            <li><i class="fas fa-leaf text-green-700 mr-2"></i>Laravel (PHP)</li>
+                                                            <li><i class="fas fa-gem text-red-600 mr-2"></i>Ruby on Rails (Ruby)</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Subtema b: Tipos de frameworks backend -->
+                                        <div id="tipos-backend" class="mb-12 scroll-mt-24">
+                                            <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
+                                                <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">b</span>
+                                                Tipos de frameworks de backend existentes
+                                            </h3>
+                                            <div class="overflow-x-auto">
+                                                <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                                                    <thead class="bg-primary text-white">
+                                                        <tr>
+                                                            <th class="py-3 px-4 text-left">Framework</th>
+                                                            <th class="py-3 px-4 text-left">Lenguaje</th>
+                                                            <th class="py-3 px-4 text-left">Tipo</th>
+                                                            <th class="py-3 px-4 text-left">Características</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                                            <td class="py-3 px-4 font-semibold">Express.js</td>
+                                                            <td class="py-3 px-4">JavaScript</td>
+                                                            <td class="py-3 px-4">Minimalista</td>
+                                                            <td class="py-3 px-4">Ligero, flexible, gran ecosistema</td>
+                                                        </tr>
+                                                        <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                                            <td class="py-3 px-4 font-semibold">Django</td>
+                                                            <td class="py-3 px-4">Python</td>
+                                                            <td class="py-3 px-4">Completo (baterías incluidas)</td>
+                                                            <td class="py-3 px-4">ORM, admin automático, seguro</td>
+                                                        </tr>
+                                                        <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                                            <td class="py-3 px-4 font-semibold">Laravel</td>
+                                                            <td class="py-3 px-4">PHP</td>
+                                                            <td class="py-3 px-4">Completo</td>
+                                                            <td class="py-3 px-4">Eloquent ORM, Blade templating</td>
+                                                        </tr>
+                                                        <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                                            <td class="py-3 px-4 font-semibold">Spring Boot</td>
+                                                            <td class="py-3 px-4">Java</td>
+                                                            <td class="py-3 px-4">Empresarial</td>
+                                                            <td class="py-3 px-4">Robusto, escalable, seguro</td>
+                                                        </tr>
+                                                        <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                                            <td class="py-3 px-4 font-semibold">Flask</td>
+                                                            <td class="py-3 px-4">Python</td>
+                                                            <td class="py-3 px-4">Microframework</td>
+                                                            <td class="py-3 px-4">Ligero, flexible, extensible</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Subtema c: Herramientas para el framework seleccionado -->
+                                        <div id="herramientas-backend" class="mb-12 scroll-mt-24">
+                                            <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
+                                                <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">c</span>
+                                                Herramientas para el framework seleccionado (Express.js + Node.js)
+                                            </h3>
+                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                                <div class="card p-6 hover:shadow-lg transition">
+                                                    <div class="flex items-center mb-4">
+                                                        <div class="bg-primary/10 p-3 rounded-lg mr-4">
+                                                            <i class="fab fa-node text-primary text-2xl"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h4 class="font-bold text-gray-800">Node.js & npm</h4>
+                                                            <p class="text-gray-600 text-sm">Entorno de ejecución</p>
+                                                        </div>
+                                                    </div>
+                                                    <p class="text-gray-700">Entorno JavaScript del lado del servidor y gestor de paquetes</p>
+                                                    <code class="block mt-3 bg-gray-100 p-2 rounded text-sm">node -v && npm -v</code>
+                                                </div>
+                                                
+                                                <div class="card p-6 hover:shadow-lg transition">
+                                                    <div class="flex items-center mb-4">
+                                                        <div class="bg-primary/10 p-3 rounded-lg mr-4">
+                                                            <i class="fas fa-database text-primary text-2xl"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h4 class="font-bold text-gray-800">MongoDB / MySQL</h4>
+                                                            <p class="text-gray-600 text-sm">Bases de datos</p>
+                                                        </div>
+                                                    </div>
+                                                    <p class="text-gray-700">Sistemas de gestión de bases de datos (NoSQL y relacional)</p>
+                                                    <code class="block mt-3 bg-gray-100 p-2 rounded text-sm">npm install mongoose mysql2</code>
+                                                </div>
+                                                
+                                                <div class="card p-6 hover:shadow-lg transition">
+                                                    <div class="flex items-center mb-4">
+                                                        <div class="bg-primary/10 p-3 rounded-lg mr-4">
+                                                            <i class="fas fa-tools text-primary text-2xl"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h4 class="font-bold text-gray-800">Postman / Insomnia</h4>
+                                                            <p class="text-gray-600 text-sm">Cliente API</p>
+                                                        </div>
+                                                    </div>
+                                                    <p class="text-gray-700">Herramientas para probar y documentar APIs REST</p>
+                                                    <code class="block mt-3 bg-gray-100 p-2 rounded text-sm">Testing de endpoints</code>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Subtema d: Instalación y configuración -->
+                                        <div id="instalacion-backend" class="mb-12 scroll-mt-24">
+                                            <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
+                                                <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">d</span>
+                                                Proceso de instalación y configuración de Express.js
+                                            </h3>
+                                            
+                                            <div class="bg-gray-800 text-gray-100 rounded-xl p-6 mb-6 overflow-x-auto">
+                                                <h4 class="text-lg font-bold text-white mb-4">Guía de instalación paso a paso:</h4>
+                                                <pre><code class="language-bash">
+# 1. Instalar Node.js (incluye npm)
+# Descargar desde https://nodejs.org/
+
+# 2. Verificar instalación
+node --version
+npm --version
+
+# 3. Inicializar proyecto
+mkdir mi-backend
+cd mi-backend
+npm init -y
+
+# 4. Instalar Express
+npm install express
+
+# 5. Instalar dependencias de desarrollo (opcional)
+npm install -D nodemon
+
+# 6. Crear archivo principal (app.js o index.js)
+const express = require('express');
+const app = express();
+const port = 3000;
+
+app.get('/', (req, res) => {
+  res.send('¡Hola Mundo desde Express!');
+});
+
+app.listen(port, () => {
+  console.log(`Servidor corriendo en http://localhost:${port}`);
+});
+
+# 7. Ejecutar servidor
+node app.js
+# O con nodemon para desarrollo
+npx nodemon app.js
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- ======================================== -->
+                                    <!-- TEMA 2: DISEÑO BACKEND -->
+                                    <!-- ======================================== -->
+                                    <div id="diseno-backend" class="mb-16 scroll-mt-24">
+                                        <h2 class="text-2xl font-bold text-primary mb-6">2. Diseño Backend</h2>
+                                        
+                                        <!-- Subtema a: Elementos del framework backend -->
+                                        <div id="elementos-backend" class="mb-12 scroll-mt-24">
+                                            <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
+                                                <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">a</span>
+                                                Elementos que integran el framework de backend
+                                            </h3>
+                                            
+                                            <!-- i. MVC -->
+                                            <div id="mvc" class="mb-6 p-4 bg-white rounded-lg border border-gray-200 scroll-mt-24">
+                                                <h4 class="text-lg font-bold text-primary mb-2 flex items-center">
+                                                    <span class="bg-primary/20 text-primary w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2">i</span>
+                                                    ¿Qué es MVC?
+                                                </h4>
+                                                <p class="text-gray-700 mb-3">
+                                                    <strong>MVC (Model-View-Controller)</strong> es un patrón arquitectónico que separa una aplicación en tres componentes principales:
+                                                </p>
+                                                <ul class="list-disc pl-6 text-gray-600 space-y-1">
+                                                    <li><strong class="text-primary">Modelo (Model):</strong> Gestiona los datos y la lógica de negocio. Interactúa con la base de datos.</li>
+                                                    <li><strong class="text-primary">Vista (View):</strong> Presenta los datos al usuario (interfaz). En backend, pueden ser plantillas HTML o respuestas JSON.</li>
+                                                    <li><strong class="text-primary">Controlador (Controller):</strong> Maneja las peticiones del usuario, interactúa con el modelo y selecciona la vista adecuada.</li>
+                                                </ul>
+                                            </div>
+                                            
+                                            <!-- ii. Migraciones -->
+                                            <div id="migraciones" class="mb-6 p-4 bg-white rounded-lg border border-gray-200 scroll-mt-24">
+                                                <h4 class="text-lg font-bold text-primary mb-2 flex items-center">
+                                                    <span class="bg-primary/20 text-primary w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2">ii</span>
+                                                    Migraciones
+                                                </h4>
+                                                <p class="text-gray-700 mb-3">
+                                                    Las <strong>migraciones</strong> son una forma controlada y versionada de modificar la estructura de la base de datos. Permiten crear, modificar o eliminar tablas y columnas de manera programática.
+                                                </p>
+                                                <div class="bg-gray-50 p-3 rounded">
+                                                    <p class="text-sm text-gray-600"><strong>Ejemplo con Sequelize (ORM para Node.js):</strong></p>
+                                                    <code class="block mt-2 text-sm">
+npx sequelize-cli model:generate --name User --attributes name:string,email:string
+npx sequelize-cli db:migrate
+                                                    </code>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- iii. Modelos de Bases de Datos -->
+                                            <div id="modelos-bd" class="mb-6 p-4 bg-white rounded-lg border border-gray-200 scroll-mt-24">
+                                                <h4 class="text-lg font-bold text-primary mb-2 flex items-center">
+                                                    <span class="bg-primary/20 text-primary w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2">iii</span>
+                                                    Modelos de Bases de Datos
+                                                </h4>
+                                                <p class="text-gray-700 mb-3">
+                                                    Los <strong>modelos</strong> son representaciones de las tablas de la base de datos en el código. Definen la estructura, relaciones y comportamientos de los datos.
+                                                </p>
+                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                    <div class="bg-gray-50 p-3 rounded">
+                                                        <p class="font-semibold text-sm">Ejemplo con Mongoose (MongoDB):</p>
+                                                        <code class="block mt-1 text-xs">
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: { type: String, unique: true },
+  age: Number
+});
+                                                        </code>
+                                                    </div>
+                                                    <div class="bg-gray-50 p-3 rounded">
+                                                        <p class="font-semibold text-sm">Ejemplo con Sequelize (SQL):</p>
+                                                        <code class="block mt-1 text-xs">
+const User = sequelize.define('User', {
+  name: DataTypes.STRING,
+  email: DataTypes.STRING
+});
+                                                        </code>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- iv. Vistas y rutas -->
+                                            <div id="vistas-rutas" class="mb-6 p-4 bg-white rounded-lg border border-gray-200 scroll-mt-24">
+                                                <h4 class="text-lg font-bold text-primary mb-2 flex items-center">
+                                                    <span class="bg-primary/20 text-primary w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2">iv</span>
+                                                    Vistas y rutas
+                                                </h4>
+                                                <p class="text-gray-700 mb-3">
+                                                    Las <strong>rutas</strong> definen los endpoints de la API y asocian URLs con controladores. Las <strong>vistas</strong> en backend pueden ser plantillas HTML (SSR) o respuestas JSON (API).
+                                                </p>
+                                                <div class="bg-gray-50 p-3 rounded">
+                                                    <code class="block text-sm">
+// Definición de rutas en Express
+app.get('/api/users', userController.getAllUsers);
+app.post('/api/users', userController.createUser);
+app.get('/api/users/:id', userController.getUserById);
+                                                    </code>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- v. Controladores -->
+                                            <div id="controladores" class="mb-6 p-4 bg-white rounded-lg border border-gray-200 scroll-mt-24">
+                                                <h4 class="text-lg font-bold text-primary mb-2 flex items-center">
+                                                    <span class="bg-primary/20 text-primary w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2">v</span>
+                                                    Controladores
+                                                </h4>
+                                                <p class="text-gray-700 mb-3">
+                                                    Los <strong>controladores</strong> contienen la lógica de negocio de la aplicación. Procesan las peticiones, interactúan con los modelos y retornan respuestas.
+                                                </p>
+                                                <div class="bg-gray-50 p-3 rounded">
+                                                    <code class="block text-sm">
+// Ejemplo de controlador en Express
+const userController = {
+  getAllUsers: async (req, res) => {
+    try {
+      const users = await User.find();
+      res.json(users);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+};
+                                                    </code>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Subtema b: UI/UX/IXD en backend -->
+                                        <div id="ui-ux-backend" class="mb-12 scroll-mt-24">
+                                            <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
+                                                <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">b</span>
+                                                UI/UX/IXD en el desarrollo backend
+                                            </h3>
+                                            <p class="text-gray-700 mb-4">
+                                                Aunque UI/UX/IXD se asocian principalmente con el frontend, en backend también son importantes:
+                                            </p>
+                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                                <div class="bg-blue-50 p-4 rounded-lg">
+                                                    <h4 class="font-bold text-blue-800 mb-2">UI (Interfaz)</h4>
+                                                    <p class="text-blue-700 text-sm">Diseño de APIs claras y consistentes, estructura de endpoints RESTful, formatos de respuesta predecibles.</p>
+                                                </div>
+                                                <div class="bg-green-50 p-4 rounded-lg">
+                                                    <h4 class="font-bold text-green-800 mb-2">UX (Experiencia)</h4>
+                                                    <p class="text-green-700 text-sm">Tiempos de respuesta optimizados, manejo de errores claro, autenticación fluida, caché inteligente.</p>
+                                                </div>
+                                                <div class="bg-purple-50 p-4 rounded-lg">
+                                                    <h4 class="font-bold text-purple-800 mb-2">IXD (Interacción)</h4>
+                                                    <p class="text-purple-700 text-sm">WebSockets para tiempo real, notificaciones push, flujos de datos bidireccionales.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- ======================================== -->
+                                    <!-- TEMA 3: DESARROLLO DE BACKEND -->
+                                    <!-- ======================================== -->
+                                    <div id="desarrollo-backend" class="mb-16 scroll-mt-24">
+                                        <h2 class="text-2xl font-bold text-primary mb-6">3. Desarrollo de Backend</h2>
+                                        
+                                        <!-- Subtema a: Gestor de base de datos -->
+                                        <div id="gestor-bd" class="mb-12 scroll-mt-24">
+                                            <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
+                                                <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">a</span>
+                                                Gestor de base de datos
+                                            </h3>
+                                            <p class="text-gray-700 mb-4">
+                                                Un <strong>gestor de base de datos (DBMS)</strong> es el software que permite crear, administrar y manipular bases de datos. Para nuestro proyecto con Express, podemos usar:
+                                            </p>
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                <div class="card p-4">
+                                                    <div class="flex items-center mb-3">
+                                                        <i class="fas fa-leaf text-green-600 text-2xl mr-3"></i>
+                                                        <h4 class="font-bold">MongoDB (NoSQL)</h4>
+                                                    </div>
+                                                    <p class="text-sm text-gray-600">Base de datos documental, ideal para datos no estructurados. Se usa con Mongoose.</p>
+                                                </div>
+                                                <div class="card p-4">
+                                                    <div class="flex items-center mb-3">
+                                                        <i class="fas fa-database text-blue-600 text-2xl mr-3"></i>
+                                                        <h4 class="font-bold">MySQL / PostgreSQL (SQL)</h4>
+                                                    </div>
+                                                    <p class="text-sm text-gray-600">Bases de datos relacionales, ideales para datos estructurados. Se usan con Sequelize.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Subtema b: Modelos conceptuales de base de datos -->
+                                        <div id="modelos-conceptuales" class="mb-12 scroll-mt-24">
+                                            <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
+                                                <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">b</span>
+                                                Modelos conceptuales de base de datos
+                                            </h3>
+                                            <p class="text-gray-700 mb-4">
+                                                Un <strong>modelo conceptual</strong> representa las entidades, atributos y relaciones del sistema, independientemente de la tecnología.
+                                            </p>
+                                            <div class="bg-gray-50 p-6 rounded-lg">
+                                                <h4 class="font-bold mb-3">Ejemplo: Modelo E-R para un blog</h4>
+                                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                                    <div class="border rounded p-3 bg-white">
+                                                        <p class="font-semibold text-primary">Usuario</p>
+                                                        <ul class="text-xs mt-2">
+                                                            <li>• id (PK)</li>
+                                                            <li>• nombre</li>
+                                                            <li>• email</li>
+                                                            <li>• password</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="border rounded p-3 bg-white">
+                                                        <p class="font-semibold text-primary">Publicación</p>
+                                                        <ul class="text-xs mt-2">
+                                                            <li>• id (PK)</li>
+                                                            <li>• título</li>
+                                                            <li>• contenido</li>
+                                                            <li>• usuario_id (FK)</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="border rounded p-3 bg-white">
+                                                        <p class="font-semibold text-primary">Comentario</p>
+                                                        <ul class="text-xs mt-2">
+                                                            <li>• id (PK)</li>
+                                                            <li>• texto</li>
+                                                            <li>• publicación_id (FK)</li>
+                                                            <li>• usuario_id (FK)</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <p class="text-xs text-gray-500 mt-3">Relaciones: Usuario (1) ── (N) Publicación (1) ── (N) Comentario</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Subtema c: Diseños de interfaces de usuario -->
+                                        <div id="diseno-interfaces" class="mb-12 scroll-mt-24">
+                                            <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
+                                                <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">c</span>
+                                                Diseños de interfaces de usuario
+                                            </h3>
+                                            <p class="text-gray-700 mb-4">
+                                                Aunque el backend no genera directamente la interfaz, define qué datos estarán disponibles para el frontend. El diseño de APIs RESTful debe considerar:
+                                            </p>
+                                            <ul class="list-disc pl-6 text-gray-600 space-y-2">
+                                                <li><strong>Endpoints intuitivos:</strong> /api/users, /api/posts, /api/posts/:id/comments</li>
+                                                <li><strong>Métodos HTTP apropiados:</strong> GET, POST, PUT, DELETE</li>
+                                                <li><strong>Estructura de respuesta consistente:</strong> { success: true, data: [...], error: null }</li>
+                                                <li><strong>Códigos de estado HTTP:</strong> 200, 201, 400, 401, 404, 500</li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <!-- Subtema d: Funcionalidad del sitio con el framework -->
+                                        <div id="funcionalidad-framework" class="mb-12 scroll-mt-24">
+                                            <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
+                                                <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">d</span>
+                                                Funcionalidad del sitio con el framework
+                                            </h3>
+                                            <p class="text-gray-700 mb-4">
+                                                Con Express.js podemos implementar todas las funcionalidades del backend:
+                                            </p>
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div class="bg-gray-50 p-4 rounded-lg">
+                                                    <h4 class="font-bold text-primary mb-2">CRUD completo</h4>
+                                                    <p class="text-sm">Crear, leer, actualizar y eliminar recursos mediante APIs REST.</p>
+                                                </div>
+                                                <div class="bg-gray-50 p-4 rounded-lg">
+                                                    <h4 class="font-bold text-primary mb-2">Autenticación</h4>
+                                                    <p class="text-sm">Registro, login, JWT, sesiones, roles y permisos.</p>
+                                                </div>
+                                                <div class="bg-gray-50 p-4 rounded-lg">
+                                                    <h4 class="font-bold text-primary mb-2">Middleware</h4>
+                                                    <p class="text-sm">Validación, logging, manejo de errores, CORS, compresión.</p>
+                                                </div>
+                                                <div class="bg-gray-50 p-4 rounded-lg">
+                                                    <h4 class="font-bold text-primary mb-2">WebSockets</h4>
+                                                    <p class="text-sm">Comunicación en tiempo real con Socket.io.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- ======================================== -->
+                                    <!-- SABER HACER - CON DOS ESPACIOS VACÍOS -->
+                                    <!-- ======================================== -->
+                                    <div id="saberhacer" class="mb-16 scroll-mt-24">
+                                        <div class="text-center py-8">
+                                            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-full mb-4">
+                                                <i class="fas fa-laptop-code text-white text-3xl"></i>
+                                            </div>
+                                            <h2 class="text-3xl font-bold text-primary mb-4">Saber Hacer</h2>
+                                            <p class="text-gray-600 text-lg mb-6 max-w-2xl mx-auto">
+                                                Proyectos prácticos desarrollados en la Unidad 2.
+                                            </p>
+
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                                                <!-- Saber Hacer #1 - VACÍO -->
+                                                <div class="card p-6 hover:shadow-xl transition border-2 border-dashed border-gray-300 bg-gray-50">
+                                                    <div class="flex justify-center mb-4">
+                                                        <div class="bg-gray-200 p-4 rounded-full">
+                                                            <i class="fas fa-code text-gray-400 text-3xl"></i>
+                                                        </div>
+                                                    </div>
+                                                    <h3 class="text-xl font-bold text-gray-500 mb-2">Saber Hacer #1</h3>
+                                                    <p class="text-gray-400 mb-4 text-sm italic">
+                                                        Espacio disponible para agregar proyecto
+                                                    </p>
+                                                    <div class="h-10"></div>
+                                                </div>
+
+                                                <!-- Saber Hacer #2 - VACÍO -->
+                                                <div class="card p-6 hover:shadow-xl transition border-2 border-dashed border-gray-300 bg-gray-50">
+                                                    <div class="flex justify-center mb-4">
+                                                        <div class="bg-gray-200 p-4 rounded-full">
+                                                            <i class="fas fa-database text-gray-400 text-3xl"></i>
+                                                        </div>
+                                                    </div>
+                                                    <h3 class="text-xl font-bold text-gray-500 mb-2">Saber Hacer #2</h3>
+                                                    <p class="text-gray-400 mb-4 text-sm italic">
+                                                        Espacio disponible para agregar proyecto
+                                                    </p>
+                                                    <div class="h-10"></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Mensaje informativo -->
+                                            <p class="text-sm text-gray-500 mt-6">
+                                                <i class="fas fa-info-circle mr-1"></i>
+                                                Los proyectos se agregarán próximamente.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- BOTONES DE NAVEGACIÓN con rutas relativas -->
+                                <div class="flex flex-col sm:flex-row gap-4 justify-between mt-12 pt-8 border-t border-gray-200">
+                                    <a href="../index.html" class="bg-primary hover:bg-secondary text-white font-bold py-3 px-6 rounded-lg transition duration-300 inline-flex items-center justify-center">
+                                        <i class="fas fa-home mr-2"></i> Volver al Inicio
+                                    </a>
+                                    <div class="flex gap-4">
+                                        <a href="unidad1.html" class="bg-white border border-primary text-primary hover:bg-primary hover:text-white font-bold py-3 px-6 rounded-lg transition duration-300 inline-flex items-center justify-center">
+                                            <i class="fas fa-arrow-left mr-2"></i> Unidad 1
+                                        </a>
+                                        <a href="unidad3.html" class="bg-primary hover:bg-secondary text-white font-bold py-3 px-6 rounded-lg transition duration-300 inline-flex items-center justify-center">
+                                            Siguiente: Unidad 3 <i class="fas fa-arrow-right ml-2"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div> <!-- Cierra card -->
+                        </div> <!-- Cierra lg:w-3/4 -->
+                    </div> <!-- Cierra flex flex-col lg:flex-row -->
+                </div> <!-- Cierra max-w-6xl -->
+            </div> <!-- Cierra container -->
+        </section> <!-- Cierra section -->
+
+    <!-- ==================== FOOTER INCRUSTADO ==================== -->
+    </main> <!-- Cierre del main -->
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-4 mt-8">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <!-- Derechos y créditos -->
+                <div class="pt-2">
+                    <p class="text-sm text-light/80 mb-1">
+                        &copy; <span id="current-year"></span> Portafolio de Evidencias Académicas
+                    </p>
+                    <p class="text-xs text-light/60">
+                        <span id="last-update"></span>
+                    </p>
+                </div>
+                
+                <!-- Enlaces rápidos en el footer con rutas relativas (desde subcarpeta) -->
+                <div class="mt-3 text-xs">
+                    <a href="../index.html" class="text-light/80 hover:text-light mx-2">Inicio</a>
+                    <a href="unidad1.html" class="text-light/80 hover:text-light mx-2">Unidad 1</a>
+                    <a href="unidad2.html" class="text-light/80 hover:text-light mx-2">Unidad 2</a>
+                    <a href="unidad3.html" class="text-light/80 hover:text-light mx-2">Unidad 3</a>
+                    <a href="../about.html" class="text-light/80 hover:text-light mx-2">Acerca</a>
                 </div>
             </div>
         </div>
-        
-        <!-- Contenido principal - EN CONSTRUCCIÓN -->
-        <section class="py-24">
-            <div class="container mx-auto px-4">
-                <div class="max-w-4xl mx-auto text-center">
-                    <!-- Mensaje de construcción -->
-                    <div class="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl p-12 mb-8">
-                        <div class="inline-flex items-center justify-center w-32 h-32 bg-primary/20 rounded-full mb-8">
-                            <i class="fas fa-tools text-primary text-5xl"></i>
-                        </div>
-                        <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">Contenido en Construcción</h2>
-                        <p class="text-gray-600 text-lg mb-6">
-                            La unidad 2 está actualmente en desarrollo. Pronto encontrarás aquí contenido completo sobre desarrollo backend.
-                        </p>
-                        
-                        <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 inline-block">
-                            <div class="flex items-center">
-                                <i class="fas fa-clock text-blue-500 text-2xl mr-4"></i>
-                                <div class="text-left">
-                                    <h4 class="font-bold text-blue-800">Disponible Pronto</h4>
-                                    <p class="text-blue-600 text-sm">Estamos trabajando en el contenido</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Información sobre lo que incluirá -->
-                    <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-white p-6 rounded-xl shadow-md">
-                            <div class="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-full mb-4">
-                                <i class="fas fa-database text-primary"></i>
-                            </div>
-                            <h3 class="font-bold text-primary mb-2">Bases de Datos</h3>
-                            <p class="text-gray-600 text-sm">MySQL, MongoDB, diseño de esquemas</p>
-                        </div>
-                        
-                        <div class="bg-white p-6 rounded-xl shadow-md">
-                            <div class="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-full mb-4">
-                                <i class="fas fa-server text-primary"></i>
-                            </div>
-                            <h3 class="font-bold text-primary mb-2">APIs REST</h3>
-                            <p class="text-gray-600 text-sm">Desarrollo de endpoints y documentación</p>
-                        </div>
-                        
-                        <div class="bg-white p-6 rounded-xl shadow-md">
-                            <div class="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-full mb-4">
-                                <i class="fas fa-lock text-primary"></i>
-                            </div>
-                            <h3 class="font-bold text-primary mb-2">Autenticación</h3>
-                            <p class="text-gray-600 text-sm">JWT, OAuth, manejo de sesiones</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Botones de navegación -->
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center mt-12">
-                        <a href="../index.html" class="bg-primary hover:bg-secondary text-white font-bold py-3 px-8 rounded-lg transition duration-300 inline-flex items-center justify-center">
-                            <i class="fas fa-home mr-2"></i> Ir al Inicio
-                        </a>
-                        <a href="unidad1.html" class="bg-white border border-primary text-primary hover:bg-primary hover:text-white font-bold py-3 px-8 rounded-lg transition duration-300 inline-flex items-center justify-center">
-                            <i class="fas fa-arrow-left mr-2"></i> Volver a Unidad 1
-                        </a>
-                    </div>
-                    
-                    <!-- Progreso -->
-                    <div class="mt-12 pt-12 border-t border-gray-200">
-                        <h3 class="font-bold text-gray-700 mb-4">Progreso del Desarrollo</h3>
-                        <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
-                            <div class="bg-primary h-2 rounded-full" style="width: 30%"></div>
-                        </div>
-                        <p class="text-gray-500 text-sm">30% completado • Estamos trabajando en ello</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-    
-    <!-- Loader que maneja la carga de componentes -->
+    </footer>
+    <!-- ==================== FIN DEL FOOTER ==================== -->
+
+    <!-- Script para funcionalidad de acordeón -->
     <script>
-        // Configuración del sitio
-        const SiteConfig = {
-            basePath: '../',
-            components: ['header', 'footer'],
+        (function() {
+            // Acordeón para temas principales
+            const temasPrincipales = document.querySelectorAll('.tema-principal[data-target]');
             
-            // Cargar un componente
-            async loadComponent(name) {
-                try {
-                    const response = await fetch(`${this.basePath}includes/${name}.html`);
-                    if (!response.ok) {
-                        throw new Error(`Error cargando ${name}: ${response.status}`);
-                    }
-                    return await response.text();
-                } catch (error) {
-                    console.error(`Error cargando componente ${name}:`, error);
-                    // Componente de respaldo
-                    if (name === 'header') {
-                        return `
-                            <header style="background: #6B3F69; color: white; padding: 1rem;">
-                                <div style="max-width: 1200px; margin: 0 auto;">
-                                    <a href="${this.basePath}index.html" style="color: white; text-decoration: none; font-size: 1.5rem; font-weight: bold;">
-                                        Portafolio de Evidencias
-                                    </a>
-                                </div>
-                            </header>
-                            <div style="height: 80px;"></div>
-                        `;
-                    }
-                    if (name === 'footer') {
-                        return `
-                            <footer style="background: #6B3F69; color: white; padding: 2rem; margin-top: 3rem;">
-                                <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
-                                    <p>&copy; ${new Date().getFullYear()} Portafolio de Evidencias</p>
-                                </div>
-                            </footer>
-                        `;
-                    }
-                    return '';
-                }
-            },
-            
-            // Cargar todos los componentes
-            async loadComponents() {
-                const components = {};
-                
-                for (const name of this.components) {
-                    components[name] = await this.loadComponent(name);
-                }
-                
-                return components;
-            },
-            
-            // Construir la página completa
-            async buildPage() {
-                // Ocultar pantalla de carga
-                document.getElementById('loading-screen').style.display = 'none';
-                
-                // Mostrar contenido de la página
-                const pageContent = document.getElementById('page-content');
-                
-                // Cargar componentes
-                const { header, footer } = await this.loadComponents();
-                
-                // Insertar header al inicio del body
-                document.body.insertAdjacentHTML('afterbegin', header);
-                
-                // Mostrar contenido de la página
-                pageContent.style.display = 'block';
-                
-                // Insertar footer al final del body
-                document.body.insertAdjacentHTML('beforeend', footer);
-                
-                // Cargar CSS personalizado
-                await this.loadCustomCSS();
-                
-                // Cargar scripts adicionales
-                await this.loadScripts();
-                
-                // Inicializar funcionalidades
-                this.initFunctionalities();
-            },
-            
-            // Cargar CSS personalizado
-            async loadCustomCSS() {
-                try {
-                    const link = document.createElement('link');
-                    link.rel = 'stylesheet';
-                    link.href = `${this.basePath}assets/css/main.css`;
-                    document.head.appendChild(link);
-                } catch (error) {
-                    console.error('Error cargando CSS:', error);
-                }
-            },
-            
-            // Cargar scripts adicionales
-            async loadScripts() {
-                const scripts = [
-                    `${this.basePath}assets/js/config.js`,
-                    `${this.basePath}assets/js/main.js`
-                ];
-                
-                for (const src of scripts) {
-                    try {
-                        const script = document.createElement('script');
-                        script.src = src;
-                        script.async = true;
-                        document.body.appendChild(script);
-                    } catch (error) {
-                        console.error(`Error cargando script ${src}:`, error);
-                    }
-                }
-            },
-            
-            // Inicializar funcionalidades
-            initFunctionalities() {
-                // Header scroll effect
-                window.addEventListener('scroll', function() {
-                    const header = document.querySelector('.site-header');
-                    if (header) {
-                        if (window.scrollY > 50) {
-                            header.classList.add('scrolled');
-                        } else {
-                            header.classList.remove('scrolled');
+            temasPrincipales.forEach(tema => {
+                tema.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('data-target');
+                    const subtemas = document.getElementById(targetId);
+                    const icon = this.querySelector('.fa-chevron-right');
+                    
+                    if (subtemas) {
+                        subtemas.classList.toggle('hidden');
+                        if (icon) {
+                            icon.classList.toggle('rotate-90');
                         }
                     }
                 });
-                
-                // Resaltar enlace activo en navbar (Unidad 2)
-                const navLinks = document.querySelectorAll('nav a');
-                navLinks.forEach(link => {
-                    const linkHref = link.getAttribute('href');
-                    if (linkHref && linkHref.includes('unidad2.html')) {
-                        link.classList.add('nav-active');
-                        link.setAttribute('aria-current', 'page');
+            });
+
+            // Smooth scroll para subtemas
+            document.querySelectorAll('.subtema-item').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        document.querySelectorAll('.highlighted').forEach(el => {
+                            el.classList.remove('highlighted');
+                        });
+                        
+                        targetElement.classList.add('highlighted');
+                        
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
                     }
                 });
-                
-                // Smooth scroll para enlaces internos
-                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                    anchor.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        const targetId = this.getAttribute('href');
-                        if (targetId !== '#') {
-                            const targetElement = document.querySelector(targetId);
-                            if (targetElement) {
-                                targetElement.scrollIntoView({
-                                    behavior: 'smooth',
-                                    block: 'start'
-                                });
-                            }
-                        }
-                    });
-                });
-                
-                console.log('Unidad 2 - Backend cargada correctamente');
-            }
-        };
-        
-        // Inicializar cuando el DOM esté listo
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Construir página
-            await SiteConfig.buildPage();
-        });
+            });
+        })();
     </script>
+
+    <!-- Script para año y fecha en el footer -->
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        const lastMod = new Date(document.lastModified);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('last-update').textContent = 'Última actualización: ' + lastMod.toLocaleDateString('es-ES', options);
+    </script>
+    
+    <!-- Scripts adicionales -->
+    <script src="../assets/js/main.js"></script>
 </body>
 </html>
