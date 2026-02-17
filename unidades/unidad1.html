@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +8,6 @@
     <!-- Metas SEO -->
     <meta name="description" content="Portafolio de evidencias académicas">
     <meta name="author" content="Paola Esmeralda Pérez Granados & Karol Dariela Vazquez Telles">
-    <meta name="keywords" content="framework, desarrollo web, portafolio, evidencia, Frameworks">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -24,11 +20,6 @@
                         'secondary': '#8D5F8C',
                         'accent': '#A376A2',
                         'light': '#DDC3C3',
-                        'dark': '#4A2D49',
-                    },
-                    fontFamily: {
-                        'poppins': ['Poppins', 'system-ui', 'sans-serif'],
-                        'inter': ['Inter', 'system-ui', 'sans-serif'],
                     }
                 }
             }
@@ -39,12 +30,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Estilos propios -->
+    <!-- CSS principal (ruta relativa subiendo un nivel) -->
     <link rel="stylesheet" href="../assets/css/main.css">
+    
+    <!-- Favicon (ruta relativa subiendo un nivel) -->
+    <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
     
     <style>
         :root {
@@ -52,7 +44,6 @@
             --color-secondary: #8D5F8C;
             --color-accent: #A376A2;
             --color-light: #DDC3C3;
-            --color-dark: #4A2D49;
         }
         
         body {
@@ -60,44 +51,69 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            background-color: #f9fafb;
+            color: #374151;
         }
         
         .content-wrapper {
             flex: 1;
         }
         
-        /* Header fijo con transparencia */
-        .site-header {
-            backdrop-filter: blur(10px);
-            background: rgba(107, 63, 105, 0.95);
+        /* Estilos para el acordeón */
+        .tema-principal {
+            cursor: pointer;
             transition: all 0.3s ease;
         }
         
-        .site-header.scrolled {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        .tema-principal:hover {
+            background-color: rgba(107, 63, 105, 0.05);
         }
         
-        /* Navegación activa */
-        .nav-active {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
+        .subtema-item {
+            transition: all 0.3s ease;
         }
         
-        /* Espacio para header fijo */
-        .header-spacer {
-            height: 80px;
+        .subtema-item:hover {
+            background-color: rgba(107, 63, 105, 0.05);
+            transform: translateX(5px);
         }
         
-        @media (max-width: 768px) {
-            .header-spacer {
-                height: 70px;
-            }
+        .fa-chevron-right {
+            transition: transform 0.3s ease;
+        }
+        
+        .rotate-90 {
+            transform: rotate(90deg);
+        }
+        
+        .subtemas {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .highlighted {
+            background-color: rgba(107, 63, 105, 0.1);
+            border-left: 4px solid var(--color-primary);
+            padding-left: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            display: block;
+            overflow-x: auto;
+            padding: 1rem;
+            line-height: 1.5;
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
-    <!-- Header fijo -->
-    <header class="site-header fixed top-0 left-0 right-0 text-white z-50 py-3">
+<body>
+    <!-- ==================== HEADER INCRUSTADO ==================== -->
+    <header class="site-header fixed top-0 left-0 right-0 text-white z-50 py-3" style="background: rgba(107, 63, 105, 0.95); backdrop-filter: blur(10px);">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <!-- Logo y nombre del sitio -->
@@ -112,46 +128,15 @@
                         <p class="text-light text-xs">Frameworks</p>
                     </div>
                 </div>
-                
-                <!-- Información de alumnos (solo desktop) -->
-                <div class="hidden md:block text-center">
-                    <p class="text-sm text-light">Paola Esmeralda Pérez Granados</p>
-                    <p class="text-sm text-light">Karol Dariela Vazquez Telles</p>
-                </div>
-                
-                <!-- Navegación principal -->
+
+                <!-- Navegación principal con rutas relativas (desde subcarpeta) -->
                 <nav class="w-full md:w-auto">
                     <ul class="flex flex-wrap justify-center md:justify-end space-x-2">
-                        <li>
-                            <a href="../index.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center">
-                                <i class="fas fa-home mr-1"></i>
-                                <span class="hidden md:inline">Inicio</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="unidad1.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center nav-active font-semibold">
-                                <i class="fas fa-palette mr-1"></i>
-                                <span class="hidden md:inline">Unidad 1</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="unidad2.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center">
-                                <i class="fas fa-server mr-1"></i>
-                                <span class="hidden md:inline">Unidad 2</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="unidad3.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center">
-                                <i class="fas fa-shield-alt mr-1"></i>
-                                <span class="hidden md:inline">Unidad 3</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../about.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center">
-                                <i class="fas fa-info-circle mr-1"></i>
-                                <span class="hidden md:inline">Acerca</span>
-                            </a>
-                        </li>
+                        <li><a href="../index.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center"><i class="fas fa-home mr-1"></i><span class="hidden md:inline">Inicio</span></a></li>
+                        <li><a href="unidad1.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center"><i class="fas fa-palette mr-1"></i><span class="hidden md:inline">Unidad 1</span></a></li>
+                        <li><a href="unidad2.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center"><i class="fas fa-server mr-1"></i><span class="hidden md:inline">Unidad 2</span></a></li>
+                        <li><a href="unidad3.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center"><i class="fas fa-shield-alt mr-1"></i><span class="hidden md:inline">Unidad 3</span></a></li>
+                        <li><a href="../about.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center"><i class="fas fa-info-circle mr-1"></i><span class="hidden md:inline">Acerca</span></a></li>
                     </ul>
                 </nav>
             </div>
@@ -159,10 +144,13 @@
     </header>
 
     <!-- Espacio para el header fijo -->
-    <div class="header-spacer"></div>
+    <div class="header-spacer" style="height: 80px;"></div>
 
     <!-- Contenedor principal -->
     <main class="content-wrapper">
+    <!-- ==================== FIN DEL HEADER ==================== -->
+
+        <!-- Contenido específico de la Unidad 1 -->
         <section class="py-8">
             <div class="container mx-auto px-4">
                 <div class="max-w-6xl mx-auto">
@@ -179,95 +167,64 @@
                         </div>
                     </div>
                     
-                    <!-- Contenido principal con sidebar de navegación -->
+                    <!-- Contenido principal con sidebar -->
                     <div class="flex flex-col lg:flex-row gap-8">
-                        <!-- Sidebar de navegación -->
+                        <!-- Sidebar de navegación con acordeón -->
                         <div class="lg:w-1/4">
                             <div class="card overflow-hidden sticky top-24">
                                 <div class="bg-primary text-white p-4">
                                     <h3 class="text-lg font-bold">Temas de la Unidad</h3>
                                 </div>
                                 <div class="p-0">
-                                    <!-- Navegación por temas -->
-                                    <div class="space-y-1">
-                                        <!-- Tema 1: Fundamentos -->
-                                        <div>
-                                            <a href="#fundamentos" 
-                                               class="flex items-center justify-between p-4 hover:bg-gray-50 tema-nav-item">
-                                                <div class="flex items-center">
-                                                    <span class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3">1</span>
-                                                    <span class="font-medium">Fundamentos de Frontend</span>
-                                                </div>
-                                                <i class="fas fa-chevron-right text-gray-400 text-sm"></i>
-                                            </a>
-                                            
-                                            <!-- Subtemas de Fundamentos -->
-                                            <div class="ml-8 space-y-1 border-l border-gray-200 pl-4 py-2">
-                                                <a href="#concepto" class="block p-2 hover:bg-gray-50 rounded subtema-item">
-                                                    • Concepto de frameworks
-                                                </a>
-                                                <a href="#tipos" class="block p-2 hover:bg-gray-50 rounded subtema-item">
-                                                    • Tipos de frameworks
-                                                </a>
-                                                <a href="#herramientas" class="block p-2 hover:bg-gray-50 rounded subtema-item">
-                                                    • Herramientas
-                                                </a>
-                                                <a href="#instalacion" class="block p-2 hover:bg-gray-50 rounded subtema-item">
-                                                    • Instalación y configuración
-                                                </a>
+                                    <!-- Tema 1: Fundamentos -->
+                                    <div class="border-b border-gray-100">
+                                        <div class="tema-principal flex items-center justify-between p-4 hover:bg-gray-50" data-target="subtemas-fundamentos">
+                                            <div class="flex items-center">
+                                                <span class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3">1</span>
+                                                <span class="font-medium">Fundamentos de Frontend</span>
                                             </div>
+                                            <i class="fas fa-chevron-right text-gray-400 text-sm"></i>
                                         </div>
                                         
-                                        <!-- Tema 2: Diseño Frontend -->
-                                        <div>
-                                            <a href="#diseno" 
-                                               class="flex items-center justify-between p-4 hover:bg-gray-50 tema-nav-item">
-                                                <div class="flex items-center">
-                                                    <span class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3">2</span>
-                                                    <span class="font-medium">Diseño Frontend</span>
-                                                </div>
-                                                <i class="fas fa-chevron-right text-gray-400 text-sm"></i>
-                                            </a>
-                                            
-                                            <!-- Subtemas de Diseño -->
-                                            <div class="ml-8 space-y-1 border-l border-gray-200 pl-4 py-2">
-                                                <a href="#elementos" class="block p-2 hover:bg-gray-50 rounded subtema-item">
-                                                    • Elementos del framework
-                                                </a>
-                                                <a href="#mvvm" class="block p-2 hover:bg-gray-50 rounded subtema-item">
-                                                    • Modelo MVVM
-                                                </a>
-                                                <a href="#apis" class="block p-2 hover:bg-gray-50 rounded subtema-item">
-                                                    • APIs y localStorage
-                                                </a>
-                                                <a href="#hospedaje" class="block p-2 hover:bg-gray-50 rounded subtema-item">
-                                                    • Hospedaje web
-                                                </a>
-                                                <a href="#contenidos" class="block p-2 hover:bg-gray-50 rounded subtema-item">
-                                                    • Contenidos web
-                                                </a>
-                                                <a href="#ux" class="block p-2 hover:bg-gray-50 rounded subtema-item">
-                                                    • UI/UX/IXD
-                                                </a>
-                                                <a href="#responsivo" class="block p-2 hover:bg-gray-50 rounded subtema-item">
-                                                    • Diseño responsivo
-                                                </a>
+                                        <div id="subtemas-fundamentos" class="subtemas hidden ml-8 space-y-1 border-l border-gray-200 pl-4 py-2 mr-2">
+                                            <a href="#concepto" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">Concepto de frameworks</a>
+                                            <a href="#tipos" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">Tipos de frameworks</a>
+                                            <a href="#herramientas" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">Herramientas</a>
+                                            <a href="#instalacion" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">Instalación y configuración</a>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Tema 2: Diseño Frontend -->
+                                    <div class="border-b border-gray-100">
+                                        <div class="tema-principal flex items-center justify-between p-4 hover:bg-gray-50" data-target="subtemas-diseno">
+                                            <div class="flex items-center">
+                                                <span class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3">2</span>
+                                                <span class="font-medium">Diseño Frontend</span>
                                             </div>
+                                            <i class="fas fa-chevron-right text-gray-400 text-sm"></i>
                                         </div>
                                         
-                                        <!-- Saber Hacer -->
-                                        <div>
-                                            <a href="#saberhacer" 
-                                               class="flex items-center justify-between p-4 hover:bg-gray-50 tema-nav-item">
-                                                <div class="flex items-center">
-                                                    <span class="bg-accent text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3">
-                                                        <i class="fas fa-code"></i>
-                                                    </span>
-                                                    <span class="font-medium">Saber Hacer</span>
-                                                </div>
-                                                <i class="fas fa-chevron-right text-gray-400 text-sm"></i>
-                                            </a>
+                                        <div id="subtemas-diseno" class="subtemas hidden ml-8 space-y-1 border-l border-gray-200 pl-4 py-2 mr-2">
+                                            <a href="#elementos" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">Elementos del framework</a>
+                                            <a href="#mvvm" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">Modelo MVVM</a>
+                                            <a href="#apis" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">APIs y localStorage</a>
+                                            <a href="#hospedaje" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">Hospedaje web</a>
+                                            <a href="#contenidos" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">Contenidos web</a>
+                                            <a href="#ux" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">UI/UX/IXD</a>
+                                            <a href="#responsivo" class="subtema-item block p-2 hover:bg-gray-50 rounded text-sm">Diseño responsivo</a>
                                         </div>
+                                    </div>
+                                    
+                                    <!-- Saber Hacer -->
+                                    <div>
+                                        <a href="#saberhacer" class="flex items-center justify-between p-4 hover:bg-gray-50">
+                                            <div class="flex items-center">
+                                                <span class="bg-accent text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-3">
+                                                    <i class="fas fa-code text-xs"></i>
+                                                </span>
+                                                <span class="font-medium">Saber Hacer</span>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -276,31 +233,30 @@
                         <!-- Contenido principal -->
                         <div class="lg:w-3/4">
                             <div class="card p-8">
-                                <!-- Breadcrumb -->
+                                <!-- Breadcrumb con rutas relativas -->
                                 <nav class="flex mb-6" aria-label="Breadcrumb">
                                     <ol class="inline-flex items-center space-x-1 md:space-x-3">
                                         <li class="inline-flex items-center">
                                             <a href="../index.html" class="inline-flex items-center text-sm text-gray-700 hover:text-primary">
-                                                <i class="fas fa-home mr-2"></i>
-                                                Inicio
+                                                <i class="fas fa-home mr-2"></i> Inicio
                                             </a>
                                         </li>
                                         <li>
                                             <div class="flex items-center">
                                                 <i class="fas fa-chevron-right text-gray-400 mx-2"></i>
-                                                <a href="unidad1.html" class="ml-1 text-sm text-gray-700 hover:text-primary md:ml-2">Unidad 1</a>
+                                                <span class="ml-1 text-sm text-gray-700 md:ml-2">Unidad 1</span>
                                             </div>
                                         </li>
                                     </ol>
                                 </nav>
                                 
-                                <!-- Contenido dinámico según tema seleccionado -->
+                                <!-- CONTENIDO EXTENSO DE LA UNIDAD 1 -->
                                 <div id="contenido-tema">
                                     <!-- TEMA: FUNDAMENTOS -->
-                                    <div id="fundamentos">
+                                    <div id="fundamentos" class="mb-16 scroll-mt-24">
                                         <h2 class="text-2xl font-bold text-primary mb-6">Fundamentos de Frontend</h2>
                                         
-                                        <div id="concepto" class="mb-8">
+                                        <div id="concepto" class="mb-12 scroll-mt-24">
                                             <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
                                                 <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">a</span>
                                                 Concepto de frameworks de Frontend web
@@ -332,7 +288,7 @@
                                             </div>
                                         </div>
                                         
-                                        <div id="tipos" class="mb-8">
+                                        <div id="tipos" class="mb-12 scroll-mt-24">
                                             <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
                                                 <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">b</span>
                                                 Tipos de frameworks de Frontend existentes
@@ -403,19 +359,9 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <div class="p-4 bg-blue-50 rounded-lg">
-                                                    <h4 class="font-bold text-blue-800 mb-2">Frameworks basados en componentes</h4>
-                                                    <p class="text-blue-700 text-sm">React, Vue, Angular - Se centran en componentes reutilizables</p>
-                                                </div>
-                                                <div class="p-4 bg-green-50 rounded-lg">
-                                                    <h4 class="font-bold text-green-800 mb-2">Frameworks progresivos</h4>
-                                                    <p class="text-green-700 text-sm">Vue.js - Pueden adoptarse gradualmente</p>
-                                                </div>
-                                            </div>
                                         </div>
                                         
-                                        <div id="herramientas" class="mb-8">
+                                        <div id="herramientas" class="mb-12 scroll-mt-24">
                                             <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
                                                 <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">c</span>
                                                 Herramientas para el framework seleccionado (Tailwind CSS)
@@ -463,31 +409,9 @@
                                                     <code class="block mt-3 bg-gray-100 p-2 rounded text-sm">npm run build</code>
                                                 </div>
                                             </div>
-                                            
-                                            <div class="mt-6 bg-gradient-to-r from-primary/10 to-secondary/10 p-6 rounded-xl">
-                                                <h4 class="font-bold text-primary mb-3">Flujo de trabajo con Tailwind:</h4>
-                                                <ol class="space-y-2 text-gray-700">
-                                                    <li class="flex items-start">
-                                                        <span class="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1">1</span>
-                                                        <span>Instalación vía npm o CDN</span>
-                                                    </li>
-                                                    <li class="flex items-start">
-                                                        <span class="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1">2</span>
-                                                        <span>Configuración del archivo tailwind.config.js</span>
-                                                    </li>
-                                                    <li class="flex items-start">
-                                                        <span class="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1">3</span>
-                                                        <span>Importación en CSS principal</span>
-                                                    </li>
-                                                    <li class="flex items-start">
-                                                        <span class="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1">4</span>
-                                                        <span>Uso de clases utilitarias en HTML</span>
-                                                    </li>
-                                                </ol>
-                                            </div>
                                         </div>
                                         
-                                        <div id="instalacion" class="mb-8">
+                                        <div id="instalacion" class="mb-12 scroll-mt-24">
                                             <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
                                                 <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">d</span>
                                                 Proceso de instalación y configuración de Tailwind CSS
@@ -526,1209 +450,117 @@ npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
 npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify
                                                 </code></pre>
                                             </div>
-                                            
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                <div class="border border-gray-200 rounded-xl p-6">
-                                                    <h4 class="font-bold text-primary mb-3">Configuración del archivo tailwind.config.js:</h4>
-                                                    <div class="bg-gray-50 p-4 rounded-lg">
-                                                        <code class="text-sm">
-module.exports = {
-  content: [
-    "./**/*.php",
-    "./**/*.html",
-    "./**/*.js",
-  ],
-  theme: {
-    extend: {
-      colors: {
-        primary: '#6B3F69',
-        secondary: '#8D5F8C',
-        accent: '#A376A2',
-        light: '#DDC3C3',
-        dark: '#4A2D49',
-      },
-      fontFamily: {
-        'poppins': ['Poppins', 'sans-serif'],
-      },
-    },
-  },
-  plugins: [],
-}
-                                                        </code>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="border border-gray-200 rounded-xl p-6">
-                                                    <h4 class="font-bold text-primary mb-3">Ejemplo de uso en HTML:</h4>
-                                                    <div class="bg-gray-50 p-4 rounded-lg">
-                                                        <code class="text-sm">
-&lt;!-- Botón con estilos de Tailwind --&gt;
-&lt;button class="bg-primary hover:bg-secondary text-white 
-               font-bold py-2 px-4 rounded-lg 
-               transition duration-300"&gt;
-  Click me
-&lt;/button&gt;
-
-&lt;!-- Tarjeta responsiva --&gt;
-&lt;div class="max-w-sm rounded-lg overflow-hidden 
-            shadow-lg bg-white"&gt;
-  &lt;div class="px-6 py-4"&gt;
-    &lt;h2 class="font-bold text-xl mb-2"&gt;Título&lt;/h2&gt;
-    &lt;p class="text-gray-700"&gt;Contenido...&lt;/p&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-                                                        </code>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="mt-6 p-6 bg-blue-50 rounded-xl">
-                                                <div class="flex items-start">
-                                                    <i class="fas fa-lightbulb text-blue-500 text-2xl mt-1 mr-4"></i>
-                                                    <div>
-                                                        <h4 class="font-bold text-blue-800 mb-2">Buenas prácticas de instalación:</h4>
-                                                        <ul class="text-blue-700 space-y-1">
-                                                            <li><i class="fas fa-check mr-2"></i>Usar siempre la versión estable más reciente</li>
-                                                            <li><i class="fas fa-check mr-2"></i>Configurar PurgeCSS para eliminar CSS no utilizado en producción</li>
-                                                            <li><i class="fas fa-check mr-2"></i>Utilizar CDN solo para prototipos rápidos, no para producción</li>
-                                                            <li><i class="fas fa-check mr-2"></i>Mantener todas las dependencias actualizadas</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
 
                                     <!-- TEMA: DISEÑO FRONTEND -->
-                                    <div id="diseno">
+                                    <div id="diseno" class="mb-16 scroll-mt-24">
                                         <h2 class="text-2xl font-bold text-primary mb-6">Diseño Frontend</h2>
                                         
-                                        <div id="elementos" class="mb-8">
+                                        <div id="elementos" class="mb-12 scroll-mt-24">
                                             <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
                                                 <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">a</span>
                                                 Elementos que integran el framework de frontend
                                             </h3>
-                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                                                <div class="bg-gradient-to-br from-primary/10 to-secondary/10 p-6 rounded-xl">
-                                                    <div class="inline-flex items-center justify-center w-12 h-12 bg-primary/20 rounded-full mb-4">
-                                                        <i class="fas fa-cube text-primary"></i>
-                                                    </div>
-                                                    <h4 class="font-bold text-gray-800 mb-2">Componentes</h4>
-                                                    <p class="text-gray-600 text-sm">Elementos UI reutilizables como botones, formularios, cards</p>
+                                            <p class="text-gray-700 mb-4">Los frameworks de frontend incluyen componentes, directivas, gestión de estado, y utilidades CSS para agilizar el desarrollo.</p>
+                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                                <div class="bg-blue-50 p-4 rounded-lg">
+                                                    <h4 class="font-bold text-blue-800 mb-2">Componentes</h4>
+                                                    <p class="text-blue-700 text-sm">Elementos UI reutilizables como botones, tarjetas, formularios</p>
                                                 </div>
-                                                
-                                                <div class="bg-gradient-to-br from-primary/10 to-secondary/10 p-6 rounded-xl">
-                                                    <div class="inline-flex items-center justify-center w-12 h-12 bg-primary/20 rounded-full mb-4">
-                                                        <i class="fas fa-exchange-alt text-primary"></i>
-                                                    </div>
-                                                    <h4 class="font-bold text-gray-800 mb-2">Directivas</h4>
-                                                    <p class="text-gray-600 text-sm">Atributos especiales que extienden HTML (v-if, v-for, :bind)</p>
+                                                <div class="bg-green-50 p-4 rounded-lg">
+                                                    <h4 class="font-bold text-green-800 mb-2">Directivas</h4>
+                                                    <p class="text-green-700 text-sm">Instrucciones especiales en el template (v-if, v-for)</p>
                                                 </div>
-                                                
-                                                <div class="bg-gradient-to-br from-primary/10 to-secondary/10 p-6 rounded-xl">
-                                                    <div class="inline-flex items-center justify-center w-12 h-12 bg-primary/20 rounded-full mb-4">
-                                                        <i class="fas fa-database text-primary"></i>
-                                                    </div>
-                                                    <h4 class="font-bold text-gray-800 mb-2">Estado (State)</h4>
-                                                    <p class="text-gray-600 text-sm">Gestión de datos reactivos y persistencia de la aplicación</p>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="bg-gray-50 rounded-xl p-6">
-                                                <h4 class="font-bold text-primary mb-3">Arquitectura de componentes en Tailwind CSS:</h4>
-                                                <div class="overflow-x-auto">
-                                                    <table class="min-w-full bg-white border border-gray-200 rounded-lg">
-                                                        <thead class="bg-gray-100">
-                                                            <tr>
-                                                                <th class="py-2 px-4 text-left">Elemento</th>
-                                                                <th class="py-2 px-4 text-left">Función</th>
-                                                                <th class="py-2 px-4 text-left">Ejemplo Tailwind</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr class="border-b">
-                                                                <td class="py-3 px-4">Utilidades</td>
-                                                                <td class="py-3 px-4">Clases atómicas para estilos</td>
-                                                                <td class="py-3 px-4"><code class="bg-gray-100 px-2 py-1 rounded">bg-blue-500 text-white</code></td>
-                                                            </tr>
-                                                            <tr class="border-b">
-                                                                <td class="py-3 px-4">Componentes</td>
-                                                                <td class="py-3 px-4">Elementos UI complejos</td>
-                                                                <td class="py-3 px-4"><code class="bg-gray-100 px-2 py-1 rounded">@apply btn btn-primary</code></td>
-                                                            </tr>
-                                                            <tr class="border-b">
-                                                                <td class="py-3 px-4">Layout</td>
-                                                                <td class="py-3 px-4">Estructura de página</td>
-                                                                <td class="py-3 px-4"><code class="bg-gray-100 px-2 py-1 rounded">grid grid-cols-3 gap-4</code></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                <div class="bg-purple-50 p-4 rounded-lg">
+                                                    <h4 class="font-bold text-purple-800 mb-2">Estado</h4>
+                                                    <p class="text-purple-700 text-sm">Gestión de datos reactivos en la aplicación</p>
                                                 </div>
                                             </div>
                                         </div>
                                         
-                                        <div id="mvvm" class="mb-8">
+                                        <div id="mvvm" class="mb-12 scroll-mt-24">
                                             <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
                                                 <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">b</span>
-                                                Modelo MVVM, instancias, interpolaciones, directivas, filtros, propiedades, funciones
+                                                Modelo MVVM
                                             </h3>
-                                            
-                                            <div class="mb-6">
-                                                <h4 class="font-bold text-gray-800 mb-3">Modelo MVVM (Model-View-ViewModel):</h4>
-                                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                                                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                                                        <h5 class="font-bold text-blue-800 mb-2">Model</h5>
-                                                        <p class="text-blue-700 text-sm">Representa los datos y la lógica de negocio</p>
-                                                    </div>
-                                                    <div class="bg-green-50 p-4 rounded-lg border border-green-200">
-                                                        <h5 class="font-bold text-green-800 mb-2">View</h5>
-                                                        <p class="text-green-700 text-sm">Interfaz de usuario (HTML/CSS)</p>
-                                                    </div>
-                                                    <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
-                                                        <h5 class="font-bold text-purple-800 mb-2">ViewModel</h5>
-                                                        <p class="text-purple-700 text-sm">Conecta Model y View, maneja lógica de presentación</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                                <div class="border border-gray-200 rounded-xl p-6">
-                                                    <h4 class="font-bold text-primary mb-3">Elementos clave en Vue.js:</h4>
-                                                    <div class="space-y-4">
-                                                        <div>
-                                                            <h5 class="font-semibold text-gray-700 mb-1">Instancias:</h5>
-                                                            <p class="text-gray-600 text-sm">Cada aplicación Vue comienza con una instancia raíz</p>
-                                                            <code class="block mt-2 bg-gray-100 p-2 rounded text-sm">new Vue({ el: '#app' })</code>
-                                                        </div>
-                                                        <div>
-                                                            <h5 class="font-semibold text-gray-700 mb-1">Interpolaciones:</h5>
-                                                            <p class="text-gray-600 text-sm">Mostrar datos en templates con {{ }}</p>
-                                                            <code class="block mt-2 bg-gray-100 p-2 rounded text-sm">&lt;p&gt;{{ mensaje }}&lt;/p&gt;</code>
-                                                        </div>
-                                                        <div>
-                                                            <h5 class="font-semibold text-gray-700 mb-1">Directivas:</h5>
-                                                            <p class="text-gray-600 text-sm">Atributos especiales con v-</p>
-                                                            <code class="block mt-2 bg-gray-100 p-2 rounded text-sm">&lt;div v-if="visible"&gt;&lt;/div&gt;</code>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="border border-gray-200 rounded-xl p-6">
-                                                    <h4 class="font-bold text-primary mb-3">Ejemplo práctico:</h4>
-                                                    <div class="bg-gray-800 text-gray-100 p-4 rounded-lg">
-                                                        <pre><code class="text-sm">
-&lt;div id="app"&gt;
-  &lt;!-- Interpolación --&gt;
-  &lt;h1&gt;{{ titulo }}&lt;/h1&gt;
-  
-  &lt;!-- Directiva v-if --&gt;
-  &lt;p v-if="mostrar"&gt;Este texto se muestra condicionalmente&lt;/p&gt;
-  
-  &lt;!-- Directiva v-for --&gt;
-  &lt;ul&gt;
-    &lt;li v-for="item in items" :key="item.id"&gt;
-      {{ item.nombre }}
-    &lt;/li&gt;
-  &lt;/ul&gt;
-  
-  &lt;!-- Propiedades computadas --&gt;
-  &lt;p&gt;Total: {{ totalItems }}&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;script&gt;
-new Vue({
-  el: '#app',
-  data: {
-    titulo: 'Mi Aplicación',
-    mostrar: true,
-    items: [
-      { id: 1, nombre: 'Item 1' },
-      { id: 2, nombre: 'Item 2' }
-    ]
-  },
-  computed: {
-    totalItems() {
-      return this.items.length;
-    }
-  }
-});
-&lt;/script&gt;
-                                                        </code></pre>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="bg-gradient-to-r from-primary/10 to-secondary/10 p-6 rounded-xl">
-                                                <h4 class="font-bold text-primary mb-3">Ventajas del patrón MVVM:</h4>
-                                                <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-gray-700">
-                                                    <li class="flex items-start">
-                                                        <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                                        <span>Separación clara entre lógica y presentación</span>
-                                                    </li>
-                                                    <li class="flex items-start">
-                                                        <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                                        <span>Fácil testing de componentes individuales</span>
-                                                    </li>
-                                                    <li class="flex items-start">
-                                                        <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                                        <span>Reutilización de componentes ViewModel</span>
-                                                    </li>
-                                                    <li class="flex items-start">
-                                                        <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                                        <span>Mantenimiento más sencillo del código</span>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                            <p class="text-gray-700">MVVM (Model-View-ViewModel) es un patrón arquitectónico que separa la interfaz de usuario de la lógica de negocio. El ViewModel actúa como intermediario entre el Model (datos) y la View (interfaz).</p>
                                         </div>
                                         
-                                        <div id="apis" class="mb-8">
+                                        <div id="apis" class="mb-12 scroll-mt-24">
                                             <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
                                                 <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">c</span>
-                                                Conceptos de localStorage, APIs y su consumo
+                                                APIs y localStorage
                                             </h3>
-                                            
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                                <div class="bg-blue-50 rounded-xl p-6">
-                                                    <h4 class="font-bold text-blue-800 mb-3">localStorage vs sessionStorage:</h4>
-                                                    <div class="overflow-x-auto">
-                                                        <table class="min-w-full bg-white border border-blue-200 rounded-lg">
-                                                            <thead class="bg-blue-100">
-                                                                <tr>
-                                                                    <th class="py-2 px-4 text-left">Característica</th>
-                                                                    <th class="py-2 px-4 text-left">localStorage</th>
-                                                                    <th class="py-2 px-4 text-left">sessionStorage</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr class="border-b">
-                                                                    <td class="py-3 px-4">Duración</td>
-                                                                    <td class="py-3 px-4">Persistente</td>
-                                                                    <td class="py-3 px-4">Por sesión</td>
-                                                                </tr>
-                                                                <tr class="border-b">
-                                                                    <td class="py-3 px-4">Alcance</td>
-                                                                    <td class="py-3 px-4">Mismo origen</td>
-                                                                    <td class="py-3 px-4">Misma pestaña</td>
-                                                                </tr>
-                                                                <tr class="border-b">
-                                                                    <td class="py-3 px-4">Límite</td>
-                                                                    <td class="py-3 px-4">5-10MB</td>
-                                                                    <td class="py-3 px-4">5-10MB</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="mt-4">
-                                                        <h5 class="font-semibold text-gray-700 mb-2">Uso en JavaScript:</h5>
-                                                        <div class="bg-gray-800 text-gray-100 p-3 rounded">
-                                                            <code class="text-sm">
-// Guardar datos
-localStorage.setItem('usuario', JSON.stringify(usuario));
-
-// Recuperar datos
-const usuario = JSON.parse(localStorage.getItem('usuario'));
-
-// Eliminar datos
-localStorage.removeItem('usuario');
-
-// Limpiar todo
-localStorage.clear();
-                                                            </code>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="bg-green-50 rounded-xl p-6">
-                                                    <h4 class="font-bold text-green-800 mb-3">Consumo de APIs REST:</h4>
-                                                    <p class="text-green-700 mb-4">Las APIs permiten comunicación entre frontend y backend</p>
-                                                    
-                                                    <div class="space-y-3">
-                                                        <div>
-                                                            <h5 class="font-semibold text-gray-700 mb-1">Métodos HTTP comunes:</h5>
-                                                            <div class="flex flex-wrap gap-2">
-                                                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">GET - Obtener datos</span>
-                                                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">POST - Crear datos</span>
-                                                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">PUT - Actualizar datos</span>
-                                                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">DELETE - Eliminar datos</span>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div>
-                                                            <h5 class="font-semibold text-gray-700 mb-1">Ejemplo con Fetch API:</h5>
-                                                            <div class="bg-gray-800 text-gray-100 p-3 rounded">
-                                                                <code class="text-sm">
-// GET request
-fetch('https://api.ejemplo.com/usuarios')
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
-
-// POST request
-fetch('https://api.ejemplo.com/usuarios', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    nombre: 'Juan',
-    email: 'juan@ejemplo.com'
-  })
-});
-                                                                </code>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="bg-gradient-to-r from-primary/10 to-secondary/10 p-6 rounded-xl">
-                                                <h4 class="font-bold text-primary mb-3">Buenas prácticas:</h4>
-                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                    <div>
-                                                        <h5 class="font-semibold text-gray-700 mb-2">Para localStorage:</h5>
-                                                        <ul class="text-gray-600 text-sm space-y-1">
-                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>No almacenar datos sensibles</li>
-                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Validar datos antes de guardar</li>
-                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Manejar cuotas de almacenamiento</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div>
-                                                        <h5 class="font-semibold text-gray-700 mb-2">Para APIs:</h5>
-                                                        <ul class="text-gray-600 text-sm space-y-1">
-                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Manejar errores adecuadamente</li>
-                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Implementar loading states</li>
-                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Usar HTTPS en producción</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <p class="text-gray-700">Las APIs permiten la comunicación con servicios externos, mientras que localStorage proporciona almacenamiento persistente en el navegador del cliente.</p>
                                         </div>
-
-                                        <!-- SUBTEMA: HOSPEDAJE WEB -->
-                                        <div id="hospedaje" class="mb-8">
+                                        
+                                        <div id="hospedaje" class="mb-12 scroll-mt-24">
                                             <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
                                                 <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">d</span>
-                                                Identificar los elementos para el hospedaje del sitio web
+                                                Hospedaje web
                                             </h3>
-                                            
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                                <div class="border border-gray-200 rounded-xl p-6">
-                                                    <h4 class="font-bold text-primary mb-3">Tipos de Hosting</h4>
-                                                    <div class="space-y-4">
-                                                        <div class="p-4 bg-blue-50 rounded-lg">
-                                                            <h5 class="font-semibold text-blue-800 mb-2">Hosting Compartido</h5>
-                                                            <p class="text-blue-700 text-sm">Múltiples sitios comparten recursos de un servidor. Ideal para proyectos pequeños.</p>
-                                                            <div class="mt-2">
-                                                                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Costo: $</span>
-                                                                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded ml-1">Recomendado: Sitios pequeños</span>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="p-4 bg-green-50 rounded-lg">
-                                                            <h5 class="font-semibold text-green-800 mb-2">VPS (Servidor Privado Virtual)</h5>
-                                                            <p class="text-green-700 text-sm">Recursos dedicados en un servidor compartido. Balance entre costo y rendimiento.</p>
-                                                            <div class="mt-2">
-                                                                <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Costo: $$</span>
-                                                                <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded ml-1">Recomendado: Sitios medianos</span>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="p-4 bg-purple-50 rounded-lg">
-                                                            <h5 class="font-semibold text-purple-800 mb-2">Hosting Dedicado</h5>
-                                                            <p class="text-purple-700 text-sm">Servidor físico completo para un solo sitio. Máximo rendimiento y control.</p>
-                                                            <div class="mt-2">
-                                                                <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">Costo: $$$</span>
-                                                                <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded ml-1">Recomendado: Grandes proyectos</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="border border-gray-200 rounded-xl p-6">
-                                                    <h4 class="font-bold text-primary mb-3">Elementos Clave del Hosting</h4>
-                                                    <div class="space-y-3">
-                                                        <div class="flex items-start">
-                                                            <i class="fas fa-hdd text-primary mt-1 mr-3"></i>
-                                                            <div>
-                                                                <h5 class="font-semibold text-gray-700">Almacenamiento</h5>
-                                                                <p class="text-gray-600 text-sm">Espacio en disco para archivos, bases de datos, correos</p>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="flex items-start">
-                                                            <i class="fas fa-tachometer-alt text-primary mt-1 mr-3"></i>
-                                                            <div>
-                                                                <h5 class="font-semibold text-gray-700">Ancho de Banda</h5>
-                                                                <p class="text-gray-600 text-sm">Transferencia de datos mensual permitida</p>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="flex items-start">
-                                                            <i class="fas fa-database text-primary mt-1 mr-3"></i>
-                                                            <div>
-                                                                <h5 class="font-semibold text-gray-700">Bases de Datos</h5>
-                                                                <p class="text-gray-600 text-sm">Soporte para MySQL, PostgreSQL, MongoDB</p>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="flex items-start">
-                                                            <i class="fas fa-lock text-primary mt-1 mr-3"></i>
-                                                            <div>
-                                                                <h5 class="font-semibold text-gray-700">SSL/TLS</h5>
-                                                                <p class="text-gray-600 text-sm">Certificados de seguridad para HTTPS</p>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="flex items-start">
-                                                            <i class="fas fa-sync-alt text-primary mt-1 mr-3"></i>
-                                                            <div>
-                                                                <h5 class="font-semibold text-gray-700">Backups Automáticos</h5>
-                                                                <p class="text-gray-600 text-sm">Copias de seguridad regulares</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl p-6">
-                                                <h4 class="font-bold text-primary mb-3">Requisitos para este Portafolio</h4>
-                                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                                    <div class="bg-white p-4 rounded-lg">
-                                                        <h5 class="font-semibold text-gray-700 mb-2">PHP 7.4+</h5>
-                                                        <p class="text-gray-600 text-sm">Soporte para versiones modernas de PHP</p>
-                                                    </div>
-                                                    
-                                                    <div class="bg-white p-4 rounded-lg">
-                                                        <h5 class="font-semibold text-gray-700 mb-2">MySQL 5.7+</h5>
-                                                        <p class="text-gray-600 text-sm">Base de datos relacional</p>
-                                                    </div>
-                                                    
-                                                    <div class="bg-white p-4 rounded-lg">
-                                                        <h5 class="font-semibold text-gray-700 mb-2">HTTPS/SSL</h5>
-                                                        <p class="text-gray-600 text-sm">Conexión segura obligatoria</p>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="mt-4 p-4 bg-blue-50 rounded-lg">
-                                                    <h5 class="font-bold text-blue-800 mb-2">Proveedores Recomendados</h5>
-                                                    <div class="flex flex-wrap gap-2">
-                                                        <span class="bg-white px-3 py-1 rounded-full text-sm">HostGator</span>
-                                                        <span class="bg-white px-3 py-1 rounded-full text-sm">SiteGround</span>
-                                                        <span class="bg-white px-3 py-1 rounded-full text-sm">Bluehost</span>
-                                                        <span class="bg-white px-3 py-1 rounded-full text-sm">AWS</span>
-                                                        <span class="bg-white px-3 py-1 rounded-full text-sm">Google Cloud</span>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <p class="text-gray-700">El hospedaje web implica servicios que almacenan y sirven sitios web en Internet, incluyendo hosting compartido, VPS, servidores dedicados y plataformas en la nube.</p>
                                         </div>
-
-                                        <!-- SUBTEMA: CONTENIDOS WEB -->
-                                        <div id="contenidos" class="mb-8">
+                                        
+                                        <div id="contenidos" class="mb-12 scroll-mt-24">
                                             <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
                                                 <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">e</span>
-                                                Describir los contenidos que integran el sitio web
+                                                Contenidos web
                                             </h3>
-                                            
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                                <div class="border border-gray-200 rounded-xl p-6">
-                                                    <h4 class="font-bold text-primary mb-4">Elementos de Contenido</h4>
-                                                    
-                                                    <div class="space-y-4">
-                                                        <div>
-                                                            <h5 class="font-semibold text-gray-700 mb-2 flex items-center">
-                                                                <i class="fas fa-list-alt text-accent mr-2"></i>
-                                                                Formularios
-                                                            </h5>
-                                                            <p class="text-gray-600 text-sm mb-2">Interfaces para recopilar datos del usuario:</p>
-                                                            <ul class="text-gray-600 text-sm space-y-1 ml-6">
-                                                                <li>• Formulario de contacto</li>
-                                                                <li>• Formularios de registro/login</li>
-                                                                <li>• Validación en cliente y servidor</li>
-                                                                <li>• Protección contra CSRF</li>
-                                                            </ul>
-                                                        </div>
-                                                        
-                                                        <div>
-                                                            <h5 class="font-semibold text-gray-700 mb-2 flex items-center">
-                                                                <i class="fas fa-font text-accent mr-2"></i>
-                                                                Tipografía
-                                                            </h5>
-                                                            <p class="text-gray-600 text-sm mb-2">Selección de fuentes para mejor legibilidad:</p>
-                                                            <ul class="text-gray-600 text-sm space-y-1 ml-6">
-                                                                <li>• Poppins para títulos</li>
-                                                                <li>• Inter para texto corporal</li>
-                                                                <li>• Jerarquía visual clara</li>
-                                                                <li>• Tamaños responsivos</li>
-                                                            </ul>
-                                                        </div>
-                                                        
-                                                        <div>
-                                                            <h5 class="font-semibold text-gray-700 mb-2 flex items-center">
-                                                                <i class="fas fa-images text-accent mr-2"></i>
-                                                                Imágenes
-                                                            </h5>
-                                                            <p class="text-gray-600 text-sm mb-2">Gestión de recursos visuales:</p>
-                                                            <ul class="text-gray-600 text-sm space-y-1 ml-6">
-                                                                <li>• Optimización para web</li>
-                                                                <li>• Formatos: WebP, JPEG, PNG</li>
-                                                                <li>• Lazy loading</li>
-                                                                <li>• Textos alternativos (alt)</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="border border-gray-200 rounded-xl p-6">
-                                                    <h4 class="font-bold text-primary mb-4">Elementos Interactivos</h4>
-                                                    
-                                                    <div class="space-y-4">
-                                                        <div>
-                                                            <h5 class="font-semibold text-gray-700 mb-2 flex items-center">
-                                                                <i class="fas fa-play-circle text-accent mr-2"></i>
-                                                                Animaciones
-                                                            </h5>
-                                                            <p class="text-gray-600 text-sm mb-2">Efectos visuales para mejorar UX:</p>
-                                                            <ul class="text-gray-600 text-sm space-y-1 ml-6">
-                                                                <li>• Transiciones suaves (CSS)</li>
-                                                                <li>• Animaciones en scroll</li>
-                                                                <li>• Efectos hover</li>
-                                                                <li>• Loading animations</li>
-                                                            </ul>
-                                                        </div>
-                                                        
-                                                        <div>
-                                                            <h5 class="font-semibold text-gray-700 mb-2 flex items-center">
-                                                                <i class="fas fa-mouse-pointer text-accent mr-2"></i>
-                                                                Botones
-                                                            </h5>
-                                                            <p class="text-gray-600 text-sm mb-2">Elementos de acción principales:</p>
-                                                            <ul class="text-gray-600 text-sm space-y-1 ml-6">
-                                                                <li>• Estados: normal, hover, active</li>
-                                                                <li>• Jerarquía visual clara</li>
-                                                                <li>• Feedback táctil/visual</li>
-                                                                <li>• Accesibilidad (ARIA)</li>
-                                                            </ul>
-                                                        </div>
-                                                        
-                                                        <div>
-                                                            <h5 class="font-semibold text-gray-700 mb-2 flex items-center">
-                                                                <i class="fas fa-icons text-accent mr-2"></i>
-                                                                Iconos
-                                                            </h5>
-                                                            <p class="text-gray-600 text-sm mb-2">Elementos visuales para navegación:</p>
-                                                            <ul class="text-gray-600 text-sm space-y-1 ml-6">
-                                                                <li>• Font Awesome 6</li>
-                                                                <li>• SVG para mejor calidad</li>
-                                                                <li>• Consistencia en tamaño</li>
-                                                                <li>• Significado claro</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                <div class="border border-gray-200 rounded-xl p-6">
-                                                    <h4 class="font-bold text-primary mb-4">Elementos Multimedia</h4>
-                                                    
-                                                    <div class="space-y-4">
-                                                        <div>
-                                                            <h5 class="font-semibold text-gray-700 mb-2 flex items-center">
-                                                                <i class="fas fa-link text-accent mr-2"></i>
-                                                                Enlaces
-                                                            </h5>
-                                                            <p class="text-gray-600 text-sm mb-2">Navegación y referencias:</p>
-                                                            <ul class="text-gray-600 text-sm space-y-1 ml-6">
-                                                                <li>• Enlaces internos/externos</li>
-                                                                <li>• Estilos de estado (visited, hover)</li>
-                                                                <li>• Atributo target apropiado</li>
-                                                                <li>• Breadcrumbs para navegación</li>
-                                                            </ul>
-                                                        </div>
-                                                        
-                                                        <div>
-                                                            <h5 class="font-semibold text-gray-700 mb-2 flex items-center">
-                                                                <i class="fas fa-video text-accent mr-2"></i>
-                                                                Videos
-                                                            </h5>
-                                                            <p class="text-gray-600 text-sm mb-2">Contenido multimedia:</p>
-                                                            <ul class="text-gray-600 text-sm space-y-1 ml-6">
-                                                                <li>• Formatos: MP4, WebM</li>
-                                                                <li>• Auto-play controlado</li>
-                                                                <li>• Subtítulos opcionales</li>
-                                                                <li>• Optimización para móvil</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="border border-gray-200 rounded-xl p-6">
-                                                    <h4 class="font-bold text-primary mb-4">Diseño Visual</h4>
-                                                    
-                                                    <div>
-                                                        <h5 class="font-semibold text-gray-700 mb-2 flex items-center">
-                                                            <i class="fas fa-layer-group text-accent mr-2"></i>
-                                                            Fondos
-                                                        </h5>
-                                                        <p class="text-gray-600 text-sm mb-2">Elementos de diseño de fondo:</p>
-                                                        <ul class="text-gray-600 text-sm space-y-1 ml-6">
-                                                            <li>• Gradientes personalizados</li>
-                                                            <li>• Imágenes de fondo optimizadas</li>
-                                                            <li>• Patrones sutiles</li>
-                                                            <li>• Contraste adecuado con texto</li>
-                                                        </ul>
-                                                    </div>
-                                                    
-                                                    <div class="mt-4">
-                                                        <h5 class="font-semibold text-gray-700 mb-2 flex items-center">
-                                                            <i class="fas fa-align-left text-accent mr-2"></i>
-                                                            Contenido Textual
-                                                        </h5>
-                                                        <p class="text-gray-600 text-sm mb-2">Organización de información:</p>
-                                                        <ul class="text-gray-600 text-sm space-y-1 ml-6">
-                                                            <li>• Jerarquía clara (H1-H6)</li>
-                                                            <li>• Longitud de línea óptima</li>
-                                                            <li>• Espaciado adecuado</li>
-                                                            <li>• Contraste de color WCAG AA</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="mt-6 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl p-6">
-                                                <h4 class="font-bold text-primary mb-3">Principios de Organización de Contenido</h4>
-                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                    <div>
-                                                        <h5 class="font-semibold text-gray-700 mb-2">Estructura Lógica</h5>
-                                                        <ul class="text-gray-600 text-sm space-y-1">
-                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Agrupación por temas relacionados</li>
-                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Flujo natural de lectura</li>
-                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Progresión de simple a complejo</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div>
-                                                        <h5 class="font-semibold text-gray-700 mb-2">Accesibilidad</h5>
-                                                        <ul class="text-gray-600 text-sm space-y-1">
-                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Texto alternativo para imágenes</li>
-                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Navegación por teclado</li>
-                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Contraste adecuado</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <p class="text-gray-700">Los contenidos web incluyen texto, imágenes, videos, formularios y elementos interactivos que conforman la experiencia del usuario.</p>
                                         </div>
-
-                                        <!-- SUBTEMA: UI/UX/IXD -->
-                                        <div id="ux" class="mb-8">
+                                        
+                                        <div id="ux" class="mb-12 scroll-mt-24">
                                             <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
                                                 <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">f</span>
-                                                Definir diseños de Interfaces de Usuario (UI), Experiencias de Usuario (UX) y Diseño de Interacción (IXD)
+                                                UI/UX/IXD
                                             </h3>
-                                            
-                                            <div class="mb-6">
-                                                <h4 class="font-bold text-primary mb-3">Diferencias Clave:</h4>
-                                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                                                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                                                        <h5 class="font-bold text-blue-800 mb-2">UI (User Interface)</h5>
-                                                        <p class="text-blue-700 text-sm">Diseño visual de la interfaz. Cómo se ve y se siente.</p>
-                                                        <div class="mt-2 text-xs">
-                                                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded">Colores</span>
-                                                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded ml-1">Tipografía</span>
-                                                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded ml-1">Iconos</span>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="bg-green-50 p-4 rounded-lg border border-green-200">
-                                                        <h5 class="font-bold text-green-800 mb-2">UX (User Experience)</h5>
-                                                        <p class="text-green-700 text-sm">Experiencia completa del usuario. Cómo funciona y se usa.</p>
-                                                        <div class="mt-2 text-xs">
-                                                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded">Usabilidad</span>
-                                                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded ml-1">Accesibilidad</span>
-                                                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded ml-1">Satisfacción</span>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
-                                                        <h5 class="font-bold text-purple-800 mb-2">IXD (Interaction Design)</h5>
-                                                        <p class="text-purple-700 text-sm">Diseño de interacciones específicas. Cómo responde el sistema.</p>
-                                                        <div class="mt-2 text-xs">
-                                                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded">Animaciones</span>
-                                                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded ml-1">Feedback</span>
-                                                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded ml-1">Micro-interacciones</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                                                <div class="border border-gray-200 rounded-xl p-6">
-                                                    <h4 class="font-bold text-primary mb-4">Wireframes</h4>
-                                                    <div class="space-y-3">
-                                                        <div class="flex items-start">
-                                                            <i class="fas fa-pencil-ruler text-accent mt-1 mr-3"></i>
-                                                            <div>
-                                                                <h5 class="font-semibold text-gray-700">Definición</h5>
-                                                                <p class="text-gray-600 text-sm">Estructura básica sin diseño visual</p>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="flex items-start">
-                                                            <i class="fas fa-bullseye text-accent mt-1 mr-3"></i>
-                                                            <div>
-                                                                <h5 class="font-semibold text-gray-700">Objetivo</h5>
-                                                                <p class="text-gray-600 text-sm">Definir layout y jerarquía de contenido</p>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="flex items-start">
-                                                            <i class="fas fa-tools text-accent mt-1 mr-3"></i>
-                                                            <div>
-                                                                <h5 class="font-semibold text-gray-700">Herramientas</h5>
-                                                                <p class="text-gray-600 text-sm">Figma, Balsamiq, Adobe XD</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="mt-4 p-3 bg-gray-100 rounded-lg">
-                                                        <p class="text-gray-700 text-sm font-semibold">Características:</p>
-                                                        <ul class="text-gray-600 text-xs mt-1 space-y-1">
-                                                            <li>• Enfoque en funcionalidad</li>
-                                                            <li>• Sin colores ni imágenes</li>
-                                                            <li>• Rápido de crear/modificar</li>
-                                                            <li>• Ideal para feedback temprano</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="border border-gray-200 rounded-xl p-6">
-                                                    <h4 class="font-bold text-primary mb-4">Mockups</h4>
-                                                    <div class="space-y-3">
-                                                        <div class="flex items-start">
-                                                            <i class="fas fa-paint-brush text-accent mt-1 mr-3"></i>
-                                                            <div>
-                                                                <h5 class="font-semibold text-gray-700">Definición</h5>
-                                                                <p class="text-gray-600 text-sm">Diseño visual estático con detalles</p>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="flex items-start">
-                                                            <i class="fas fa-bullseye text-accent mt-1 mr-3"></i>
-                                                            <div>
-                                                                <h5 class="font-semibold text-gray-700">Objetivo</h5>
-                                                                <p class="text-gray-600 text-sm">Presentar apariencia final del diseño</p>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="flex items-start">
-                                                            <i class="fas fa-tools text-accent mt-1 mr-3"></i>
-                                                            <div>
-                                                                <h5 class="font-semibold text-gray-700">Herramientas</h5>
-                                                                <p class="text-gray-600 text-sm">Figma, Sketch, Adobe Photoshop</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="mt-4 p-3 bg-gray-100 rounded-lg">
-                                                        <p class="text-gray-700 text-sm font-semibold">Características:</p>
-                                                        <ul class="text-gray-600 text-xs mt-1 space-y-1">
-                                                            <li>• Incluye colores y tipografía</li>
-                                                            <li>• Muestra imágenes reales</li>
-                                                            <li>• Representa branding</li>
-                                                            <li>• Detalles visuales completos</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="border border-gray-200 rounded-xl p-6">
-                                                    <h4 class="font-bold text-primary mb-4">Prototipado</h4>
-                                                    <div class="space-y-3">
-                                                        <div class="flex items-start">
-                                                            <i class="fas fa-mouse-pointer text-accent mt-1 mr-3"></i>
-                                                            <div>
-                                                                <h5 class="font-semibold text-gray-700">Definición</h5>
-                                                                <p class="text-gray-600 text-sm">Versión interactiva del diseño</p>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="flex items-start">
-                                                            <i class="fas fa-bullseye text-accent mt-1 mr-3"></i>
-                                                            <div>
-                                                                <h5 class="font-semibold text-gray-700">Objetivo</h5>
-                                                                <p class="text-gray-600 text-sm">Testear flujos de usuario y usabilidad</p>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="flex items-start">
-                                                            <i class="fas fa-tools text-accent mt-1 mr-3"></i>
-                                                            <div>
-                                                                <h5 class="font-semibold text-gray-700">Herramientas</h5>
-                                                                <p class="text-gray-600 text-sm">Figma, InVision, Proto.io</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="mt-4 p-3 bg-gray-100 rounded-lg">
-                                                        <p class="text-gray-700 text-sm font-semibold">Características:</p>
-                                                        <ul class="text-gray-600 text-xs mt-1 space-y-1">
-                                                            <li>• Interactividad simulada</li>
-                                                            <li>• Navegación entre pantallas</li>
-                                                            <li>• Testeo con usuarios reales</li>
-                                                            <li>• Iteraciones rápidas</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl p-6">
-                                                <h4 class="font-bold text-primary mb-3">Flujo de Trabajo UI/UX/IXD</h4>
-                                                <div class="space-y-4">
-                                                    <div class="flex items-start">
-                                                        <span class="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1">1</span>
-                                                        <div>
-                                                            <h5 class="font-semibold text-gray-700">Investigación y Análisis</h5>
-                                                            <p class="text-gray-600 text-sm">Entender usuarios, objetivos y contexto</p>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="flex items-start">
-                                                        <span class="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1">2</span>
-                                                        <div>
-                                                            <h5 class="font-semibold text-gray-700">Wireframing</h5>
-                                                            <p class="text-gray-600 text-sm">Crear estructura básica y layout</p>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="flex items-start">
-                                                        <span class="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1">3</span>
-                                                        <div>
-                                                            <h5 class="font-semibold text-gray-700">Mockups</h5>
-                                                            <p class="text-gray-600 text-sm">Agregar diseño visual completo</p>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="flex items-start">
-                                                        <span class="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1">4</span>
-                                                        <div>
-                                                            <h5 class="font-semibold text-gray-700">Prototipado</h5>
-                                                            <p class="text-gray-600 text-sm">Agregar interactividad y testear</p>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="flex items-start">
-                                                        <span class="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-1">5</span>
-                                                        <div>
-                                                            <h5 class="font-semibold text-gray-700">Iteración</h5>
-                                                            <p class="text-gray-600 text-sm">Refinar basado en feedback</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <p class="text-gray-700">UI (Interfaz de Usuario), UX (Experiencia de Usuario) e IXD (Diseño de Interacción) son disciplinas fundamentales para crear productos digitales centrados en el usuario.</p>
                                         </div>
-
-                                        <!-- SUBTEMA: DISEÑO RESPONSIVO -->
-                                        <div id="responsivo" class="mb-8">
+                                        
+                                        <div id="responsivo" class="mb-12 scroll-mt-24">
                                             <h3 class="text-xl font-bold text-secondary mb-4 flex items-center">
                                                 <span class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center mr-3">g</span>
-                                                Identificar el framework de diseño responsivo a utilizar
+                                                Diseño responsivo
                                             </h3>
-                                            
-                                            <div class="mb-6">
-                                                <h4 class="font-bold text-primary mb-3">Tailwind CSS como Framework Responsivo</h4>
-                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                    <div class="border border-gray-200 rounded-xl p-6">
-                                                        <div class="flex items-center mb-4">
-                                                            <div class="bg-primary/10 p-3 rounded-lg mr-4">
-                                                                <i class="fab fa-css3-alt text-primary text-2xl"></i>
-                                                            </div>
-                                                            <div>
-                                                                <h5 class="font-bold text-gray-800">Características Principales</h5>
-                                                                <p class="text-gray-600 text-sm">Framework CSS utility-first</p>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="space-y-3">
-                                                            <div class="flex items-center">
-                                                                <i class="fas fa-check text-green-500 mr-3"></i>
-                                                                <span class="text-gray-700">Diseño mobile-first por defecto</span>
-                                                            </div>
-                                                            <div class="flex items-center">
-                                                                <i class="fas fa-check text-green-500 mr-3"></i>
-                                                                <span class="text-gray-700">Breakpoints predefinidos</span>
-                                                            </div>
-                                                            <div class="flex items-center">
-                                                                <i class="fas fa-check text-green-500 mr-3"></i>
-                                                                <span class="text-gray-700">Clases utilitarias responsivas</span>
-                                                            </div>
-                                                            <div class="flex items-center">
-                                                                <i class="fas fa-check text-green-500 mr-3"></i>
-                                                                <span class="text-gray-700">Altamente personalizable</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="border border-gray-200 rounded-xl p-6">
-                                                        <div class="flex items-center mb-4">
-                                                            <div class="bg-primary/10 p-3 rounded-lg mr-4">
-                                                                <i class="fas fa-mobile-alt text-primary text-2xl"></i>
-                                                            </div>
-                                                            <div>
-                                                                <h5 class="font-bold text-gray-800">Breakpoints por Defecto</h5>
-                                                                <p class="text-gray-600 text-sm">Puntos de ruptura estándar</p>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="space-y-2">
-                                                            <div class="flex items-center justify-between">
-                                                                <span class="text-gray-700">sm</span>
-                                                                <span class="text-gray-600 text-sm">≥640px (Tablets pequeñas)</span>
-                                                                <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Mobile</span>
-                                                            </div>
-                                                            <div class="flex items-center justify-between">
-                                                                <span class="text-gray-700">md</span>
-                                                                <span class="text-gray-600 text-sm">≥768px (Tablets)</span>
-                                                                <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Tablet</span>
-                                                            </div>
-                                                            <div class="flex items-center justify-between">
-                                                                <span class="text-gray-700">lg</span>
-                                                                <span class="text-gray-600 text-sm">≥1024px (Laptops)</span>
-                                                                <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">Desktop</span>
-                                                            </div>
-                                                            <div class="flex items-center justify-between">
-                                                                <span class="text-gray-700">xl</span>
-                                                                <span class="text-gray-600 text-sm">≥1280px (Pantallas grandes)</span>
-                                                                <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">Large</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                                <div class="border border-gray-200 rounded-xl p-6">
-                                                    <h4 class="font-bold text-primary mb-4">Implementación Responsiva en HTML</h4>
-                                                    
-                                                    <div class="mb-4">
-                                                        <h5 class="font-semibold text-gray-700 mb-2">Grid System Responsivo:</h5>
-                                                        <div class="bg-gray-800 text-gray-100 p-4 rounded-lg">
-                                                            <code class="text-sm">
-&lt;!-- Grid que cambia columnas según tamaño --&gt;
-&lt;div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"&gt;
-  &lt;div class="bg-blue-100 p-4"&gt;Item 1&lt;/div&gt;
-  &lt;div class="bg-blue-100 p-4"&gt;Item 2&lt;/div&gt;
-  &lt;div class="bg-blue-100 p-4"&gt;Item 3&lt;/div&gt;
-&lt;/div&gt;
-                                                            </code>
-                                                        </div>
-                                                        <p class="text-gray-600 text-sm mt-2">
-                                                            • 1 columna en móvil<br>
-                                                            • 2 columnas en tablet<br>
-                                                            • 3 columnas en desktop
-                                                        </p>
-                                                    </div>
-                                                    
-                                                    <div>
-                                                        <h5 class="font-semibold text-gray-700 mb-2">Mostrar/Ocultar Elementos:</h5>
-                                                        <div class="bg-gray-800 text-gray-100 p-4 rounded-lg">
-                                                            <code class="text-sm">
-&lt;!-- Visible solo en desktop --&gt;
-&lt;div class="hidden md:block"&gt;
-  Contenido solo visible en tablets y mayores
-&lt;/div&gt;
-
-&lt;!-- Visible solo en móvil --&gt;
-&lt;div class="md:hidden"&gt;
-  Contenido solo visible en móvil
-&lt;/div&gt;
-                                                            </code>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="border border-gray-200 rounded-xl p-6">
-                                                    <h4 class="font-bold text-primary mb-4">Tipografía y Espaciado Responsivo</h4>
-                                                    
-                                                    <div class="mb-4">
-                                                        <h5 class="font-semibold text-gray-700 mb-2">Tamaños de Texto Adaptativos:</h5>
-                                                        <div class="bg-gray-800 text-gray-100 p-4 rounded-lg">
-                                                            <code class="text-sm">
-&lt;!-- Texto que crece con el viewport --&gt;
-&lt;h1 class="text-2xl md:text-3xl lg:text-4xl xl:text-5xl"&gt;
-  Título Responsivo
-&lt;/h1&gt;
-
-&lt;p class="text-sm md:text-base lg:text-lg"&gt;
-  Párrafo con tamaño adaptable
-&lt;/p&gt;
-                                                            </code>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div>
-                                                        <h5 class="font-semibold text-gray-700 mb-2">Padding y Margin Responsivos:</h5>
-                                                        <div class="bg-gray-800 text-gray-100 p-4 rounded-lg">
-                                                            <code class="text-sm">
-&lt;!-- Espaciado que varía por breakpoint --&gt;
-&lt;div class="p-4 md:p-6 lg:p-8"&gt;
-  &lt;!-- Menos padding en móvil, más en desktop --&gt;
-  Contenido con espaciado adaptable
-&lt;/div&gt;
-
-&lt;div class="mt-4 md:mt-8 lg:mt-12"&gt;
-  &lt;!-- Margen superior creciente --&gt;
-  Sección con márgenes responsivos
-&lt;/div&gt;
-                                                            </code>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl p-6">
-                                                <h4 class="font-bold text-primary mb-3">Buenas Prácticas con Tailwind CSS</h4>
-                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                    <div>
-                                                        <h5 class="font-semibold text-gray-700 mb-2">Mobile-First Approach:</h5>
-                                                        <ul class="text-gray-600 text-sm space-y-1">
-                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Diseñar primero para móvil</li>
-                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Usar breakpoints para mejoras progresivas</li>
-                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Evitar hide/show innecesario</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div>
-                                                        <h5 class="font-semibold text-gray-700 mb-2">Performance:</h5>
-                                                        <ul class="text-gray-600 text-sm space-y-1">
-                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Purge CSS para producción</li>
-                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Minificar archivos finales</li>
-                                                            <li><i class="fas fa-check text-green-500 mr-2"></i>Usar CDN para desarrollo rápido</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="mt-4 p-4 bg-white rounded-lg">
-                                                    <h5 class="font-bold text-primary mb-2">Configuración Personalizada:</h5>
-                                                    <div class="bg-gray-50 p-3 rounded">
-                                                        <code class="text-sm">
-// tailwind.config.js
-module.exports = {
-  theme: {
-    screens: {
-      'sm': '640px',
-      'md': '768px',
-      'lg': '1024px',
-      'xl': '1280px',
-      '2xl': '1536px',
-    },
-    extend: {
-      // Breakpoints personalizados si es necesario
-    }
-  }
-}
-                                                        </code>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="mt-6 p-6 bg-blue-50 rounded-xl">
-                                                <div class="flex items-start">
-                                                    <i class="fas fa-lightbulb text-blue-500 text-2xl mt-1 mr-4"></i>
-                                                    <div>
-                                                        <h4 class="font-bold text-blue-800 mb-2">Ventajas de Tailwind CSS para Responsive Design</h4>
-                                                        <ul class="text-blue-700 grid grid-cols-1 md:grid-cols-2 gap-2">
-                                                            <li class="flex items-start">
-                                                                <i class="fas fa-rocket mr-2 mt-1"></i>
-                                                                <span>Desarrollo más rápido con clases utilitarias</span>
-                                                            </li>
-                                                            <li class="flex items-start">
-                                                                <i class="fas fa-code mr-2 mt-1"></i>
-                                                                <span>Código más limpio y mantenible</span>
-                                                            </li>
-                                                            <li class="flex items-start">
-                                                                <i class="fas fa-sync-alt mr-2 mt-1"></i>
-                                                                <span>Consistencia en todos los breakpoints</span>
-                                                            </li>
-                                                            <li class="flex items-start">
-                                                                <i class="fas fa-paint-roller mr-2 mt-1"></i>
-                                                                <span>Fácil personalización del diseño system</span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <p class="text-gray-700">El diseño responsivo permite que un sitio web se adapte automáticamente a diferentes tamaños de pantalla y dispositivos, mejorando la experiencia del usuario.</p>
                                         </div>
                                     </div>
 
-                                    <!-- TEMA: SABER HACER -->
-                                    <div id="saberhacer">
-                                        <div class="text-center py-12">
-                                            <div class="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-r from-primary to-secondary rounded-full mb-6">
-                                                <i class="fas fa-laptop-code text-white text-4xl"></i>
+                                    <!-- Saber Hacer -->
+                                    <div id="saberhacer" class="mb-16 scroll-mt-24">
+                                        <div class="text-center py-8">
+                                            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-full mb-4">
+                                                <i class="fas fa-laptop-code text-white text-3xl"></i>
                                             </div>
                                             <h2 class="text-3xl font-bold text-primary mb-4">Saber Hacer</h2>
-                                            <p class="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
-                                                Prácticas y proyectos aplicados de la Unidad 1. Aquí encontrarás evidencias de aprendizaje y demostraciones de los conceptos estudiados.
+                                            <p class="text-gray-600 text-lg mb-6 max-w-2xl mx-auto">
+                                                Proyectos prácticos desarrollados en la Unidad 1.
                                             </p>
-                                            
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                                                <div class="card p-8 hover:shadow-xl transition">
-                                                    <div class="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-6">
-                                                        <i class="fas fa-code text-primary text-2xl"></i>
-                                                    </div>
-                                                    <h3 class="text-xl font-bold text-primary mb-4">Prácticas de Ejemplo</h3>
-                                                    <p class="text-gray-600 mb-6">
-                                                        Ejercicios prácticos que demuestran la aplicación de conceptos de frontend.
+
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                                                <!-- SH #1 – Neflis -->
+                                                <div class="card p-6 hover:shadow-xl transition">
+                                                    <h3 class="text-xl font-bold text-primary mb-2">SH #1 – Neflis</h3>
+                                                    <p class="text-gray-600 mb-4 text-sm">
+                                                        Diseñar un sitio web tomando como referencia la aplicación de Netflix.
                                                     </p>
-                                                    <div class="space-y-3">
-                                                        <div class="flex items-center text-gray-700">
-                                                            <i class="fas fa-check text-green-500 mr-3"></i>
-                                                            <span>Diseño responsivo con Tailwind</span>
-                                                        </div>
-                                                        <div class="flex items-center text-gray-700">
-                                                            <i class="fas fa-check text-green-500 mr-3"></i>
-                                                            <span>Componentes reutilizables</span>
-                                                        </div>
-                                                        <div class="flex items-center text-gray-700">
-                                                            <i class="fas fa-check text-green-500 mr-3"></i>
-                                                            <span>Consumo de APIs REST</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="card p-8 hover:shadow-xl transition">
-                                                    <div class="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-6">
-                                                        <i class="fas fa-project-diagram text-primary text-2xl"></i>
-                                                    </div>
-                                                    <h3 class="text-xl font-bold text-primary mb-4">Proyecto Final</h3>
-                                                    <p class="text-gray-600 mb-6">
-                                                        Aplicación web completa que integra todos los conceptos de la unidad.
-                                                    </p>
-                                                    <div class="space-y-3">
-                                                        <div class="flex items-center text-gray-700">
-                                                            <i class="fas fa-star text-yellow-500 mr-3"></i>
-                                                            <span>Diseño completo UI/UX</span>
-                                                        </div>
-                                                        <div class="flex items-center text-gray-700">
-                                                            <i class="fas fa-star text-yellow-500 mr-3"></i>
-                                                            <span>Frontend con framework moderno</span>
-                                                        </div>
-                                                        <div class="flex items-center text-gray-700">
-                                                            <i class="fas fa-star text-yellow-500 mr-3"></i>
-                                                            <span>Implementación real</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="mt-12 p-8 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl">
-                                                <h3 class="text-xl font-bold text-primary mb-4">Evidencias de Aprendizaje</h3>
-                                                <p class="text-gray-600 mb-6">
-                                                    Cada práctica y proyecto incluye documentación, código fuente y demostración en vivo.
-                                                </p>
-                                                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                                                    <a href="#" class="bg-primary hover:bg-secondary text-white font-bold py-3 px-6 rounded-lg transition duration-300 inline-flex items-center">
-                                                        <i class="fas fa-eye mr-2"></i> Ver Demostración
+                                                    <a href="http://10.1.1.189/saber-hacer-1/" target="_blank" rel="noopener noreferrer" 
+                                                       class="bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded-lg transition duration-300 inline-block w-full text-center">
+                                                        Ver proyecto
                                                     </a>
-                                                    <a href="#" class="bg-white border border-primary text-primary hover:bg-primary hover:text-white font-bold py-3 px-6 rounded-lg transition duration-300 inline-flex items-center">
-                                                        <i class="fas fa-download mr-2"></i> Descargar Código
+                                                </div>
+
+                                                <!-- SH #2 – Planet Fitness -->
+                                                <div class="card p-6 hover:shadow-xl transition">
+                                                    <h3 class="text-xl font-bold text-primary mb-2">SH #2 – Planet Fitness</h3>
+                                                    <p class="text-gray-600 mb-4 text-sm">
+                                                        Diseñar el índex de la URL proporcionado: https://www.planetfitness.mx/
+                                                    </p>
+                                                    <a href="https://24040062pax.github.io/saber-hacer-2/" target="_blank" rel="noopener noreferrer" 
+                                                       class="bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded-lg transition duration-300 inline-block w-full text-center">
+                                                        Ver proyecto
                                                     </a>
                                                 </div>
                                             </div>
@@ -1736,7 +568,7 @@ module.exports = {
                                     </div>
                                 </div>
                                 
-                                <!-- Botones de navegación general -->
+                                <!-- BOTONES DE NAVEGACIÓN con rutas relativas -->
                                 <div class="flex flex-col sm:flex-row gap-4 justify-between mt-12 pt-8 border-t border-gray-200">
                                     <a href="../index.html" class="bg-primary hover:bg-secondary text-white font-bold py-3 px-6 rounded-lg transition duration-300 inline-flex items-center justify-center">
                                         <i class="fas fa-home mr-2"></i> Volver al Inicio
@@ -1747,165 +579,99 @@ module.exports = {
                                         </a>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-    
+                            </div> <!-- Cierra card -->
+                        </div> <!-- Cierra lg:w-3/4 -->
+                    </div> <!-- Cierra flex flex-col lg:flex-row -->
+                </div> <!-- Cierra max-w-6xl -->
+            </div> <!-- Cierra container -->
+        </section> <!-- Cierra section -->
+
+    <!-- ==================== FOOTER INCRUSTADO ==================== -->
+    </main> <!-- Cierre del main -->
+
     <!-- Footer -->
-    <footer class="bg-primary text-white py-8 mt-12">
+    <footer class="bg-primary text-white py-4 mt-8">
         <div class="container mx-auto px-4">
             <div class="text-center">
-                <div class="mb-6">
-                    <h3 class="text-xl font-bold mb-2 text-light">Portafolio de Evidencias</h3>
-                    <p class="mb-1">Paola Esmeralda Pérez Granados & Karol Dariela Vazquez Telles</p>
-                    <p class="mb-1">Entornos Virtuales y Negocios Digitales • EVND-5A</p>
-                    <p class="mb-1">Frameworks • 5° Cuatrimestre</p>
-                    <p class="text-light/80 text-sm">Universidad Tecnológica</p>
+                <!-- Derechos y créditos -->
+                <div class="pt-2">
+                    <p class="text-sm text-light/80 mb-1">
+                        &copy; <span id="current-year"></span> Portafolio de Evidencias Académicas
+                    </p>
+                    <p class="text-xs text-light/60">
+                        <span id="last-update"></span>
+                    </p>
                 </div>
                 
-                <div class="mb-6">
-                    <h4 class="font-semibold mb-3 text-light">Enlaces Rápidos</h4>
-                    <div class="flex flex-wrap justify-center gap-4">
-                        <a href="../index.html" class="hover:text-light transition">Inicio</a>
-                        <a href="unidad1.html" class="hover:text-light transition">Unidad 1</a>
-                        <a href="unidad2.html" class="hover:text-light transition">Unidad 2</a>
-                        <a href="unidad3.html" class="hover:text-light transition">Unidad 3</a>
-                        <a href="../about.html" class="hover:text-light transition">Acerca</a>
-                    </div>
-                </div>
-                
-                <div class="pt-6 border-t border-light/30">
-                    <p class="text-sm text-light/80">
-                        &copy; 2024 Paola Esmeralda Pérez Granados & Karol Dariela Vazquez Telles • 
-                        Portafolio de Evidencias Académicas
-                    </p>
-                    <p class="text-xs text-light/60 mt-1">
-                        Desarrollado con PHP, Tailwind CSS y ❤️
-                    </p>
+                <!-- Enlaces rápidos en el footer con rutas relativas (desde subcarpeta) -->
+                <div class="mt-3 text-xs">
+                    <a href="../index.html" class="text-light/80 hover:text-light mx-2">Inicio</a>
+                    <a href="unidad1.html" class="text-light/80 hover:text-light mx-2">Unidad 1</a>
+                    <a href="unidad2.html" class="text-light/80 hover:text-light mx-2">Unidad 2</a>
+                    <a href="unidad3.html" class="text-light/80 hover:text-light mx-2">Unidad 3</a>
+                    <a href="../about.html" class="text-light/80 hover:text-light mx-2">Acerca</a>
                 </div>
             </div>
         </div>
     </footer>
-    
-    <script src="../assets/js/main.js"></script>
-    
+    <!-- ==================== FIN DEL FOOTER ==================== -->
+
+    <!-- Script para funcionalidad de acordeón (solo interactividad, no navegación) -->
     <script>
-        // Funcionalidad para la navegación
-        document.addEventListener('DOMContentLoaded', function() {
-            // Smooth scroll para enlaces internos
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
+        (function() {
+            // Acordeón para temas principales
+            const temasPrincipales = document.querySelectorAll('.tema-principal[data-target]');
+            
+            temasPrincipales.forEach(tema => {
+                tema.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId !== '#') {
-                        const targetElement = document.querySelector(targetId);
-                        if (targetElement) {
-                            // Remover resaltado anterior
-                            document.querySelectorAll('.highlighted').forEach(el => {
-                                el.classList.remove('highlighted');
-                            });
-                            
-                            // Agregar resaltado al elemento actual
-                            targetElement.classList.add('highlighted');
-                            
-                            targetElement.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'start'
-                            });
+                    
+                    const targetId = this.getAttribute('data-target');
+                    const subtemas = document.getElementById(targetId);
+                    const icon = this.querySelector('.fa-chevron-right');
+                    
+                    if (subtemas) {
+                        subtemas.classList.toggle('hidden');
+                        if (icon) {
+                            icon.classList.toggle('rotate-90');
                         }
                     }
                 });
             });
-            
-            // Animación para elementos al hacer scroll
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-in');
+
+            // Smooth scroll para subtemas
+            document.querySelectorAll('.subtema-item').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        document.querySelectorAll('.highlighted').forEach(el => {
+                            el.classList.remove('highlighted');
+                        });
+                        
+                        targetElement.classList.add('highlighted');
+                        
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
                     }
                 });
-            }, observerOptions);
-            
-            // Observar elementos para animación
-            document.querySelectorAll('.card, table, .bg-gradient-to-r').forEach(el => {
-                observer.observe(el);
             });
-        });
-        
-        // Estilo para elementos resaltados
-        const style = document.createElement('style');
-        style.textContent = `
-            .highlighted {
-                background-color: rgba(107, 63, 105, 0.1) !important;
-                border-left: 4px solid var(--color-primary) !important;
-                padding-left: 1.5rem !important;
-                margin-left: -1.5rem !important;
-                border-radius: 0 8px 8px 0 !important;
-                transition: all 0.3s ease !important;
-            }
-            
-            .tema-nav-item {
-                transition: all 0.3s ease;
-            }
-            
-            .tema-nav-item:hover {
-                transform: translateX(5px);
-            }
-            
-            .subtema-item {
-                position: relative;
-            }
-            
-            .subtema-item::before {
-                content: '';
-                position: absolute;
-                left: -1rem;
-                top: 0;
-                bottom: 0;
-                width: 2px;
-                background: var(--color-primary);
-                opacity: 0.3;
-            }
-            
-            /* Estilos para código */
-            code {
-                font-family: 'Courier New', monospace;
-                font-size: 0.9em;
-            }
-            
-            pre code {
-                display: block;
-                overflow-x: auto;
-                padding: 1rem;
-                line-height: 1.5;
-            }
-        `;
-        document.head.appendChild(style);
+        })();
     </script>
 
-    <!-- Configuración y scripts -->
-    <script src="assets/js/config.js"></script>
-    <script src="assets/js/main.js"></script>
-
-    <!-- Scripts adicionales por página -->
+    <!-- Script para año y fecha en el footer -->
     <script>
-        // Configuración específica de la página (opcional)
-        const pageConfig = {
-            title: "Unidad 1 - Frontend",
-            description: "Fundamentos de desarrollo frontend"
-        };
-        
-        // Actualizar título si es necesario
-        document.title = pageConfig.title + " | " + PortafolioConfig.SITIO_NOMBRE;
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        const lastMod = new Date(document.lastModified);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('last-update').textContent = 'Última actualización: ' + lastMod.toLocaleDateString('es-ES', options);
     </script>
+    
+    <!-- Scripts adicionales -->
+    <script src="../assets/js/main.js"></script>
 </body>
 </html>
