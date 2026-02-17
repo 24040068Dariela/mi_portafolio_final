@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio de Evidencias</title>
+    <title>Inicio | Portafolio de Evidencias</title>
+    
+    <!-- Metas SEO -->
+    <meta name="description" content="Portafolio de evidencias académicas">
+    <meta name="author" content="Paola Esmeralda Pérez Granados & Karol Dariela Vazquez Telles">
+    <meta name="keywords" content="framework, desarrollo web, portafolio, evidencia, Frameworks">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -17,10 +22,6 @@
                         'accent': '#A376A2',
                         'light': '#DDC3C3',
                         'dark': '#4A2D49',
-                    },
-                    fontFamily: {
-                        'poppins': ['Poppins', 'system-ui', 'sans-serif'],
-                        'inter': ['Inter', 'system-ui', 'sans-serif'],
                     }
                 }
             }
@@ -33,16 +34,20 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Estilos inline básicos -->
+    <!-- CSS principal (ruta relativa desde la raíz) -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    
+    <!-- Favicon (ruta relativa desde la raíz) -->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    
     <style>
         :root {
             --color-primary: #6B3F69;
             --color-secondary: #8D5F8C;
             --color-accent: #A376A2;
             --color-light: #DDC3C3;
-            --color-dark: #4A2D49;
         }
         
         body {
@@ -54,39 +59,63 @@
             color: #374151;
         }
         
-        .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            font-size: 1.5rem;
-            color: var(--color-primary);
+        .content-wrapper {
+            flex: 1;
         }
         
-        .loading-spinner {
-            border: 4px solid rgba(107, 63, 105, 0.1);
-            border-left-color: var(--color-primary);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin-right: 1rem;
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out;
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Pantalla de carga mientras se cargan los componentes -->
-    <div id="loading-screen" class="loading">
-        <div class="loading-spinner"></div>
-        <span>Cargando Portafolio...</span>
-    </div>
-    
-    <!-- Contenido específico de index.html (oculto hasta que carguen los componentes) -->
-    <div id="page-content" style="display: none;">
+    <!-- ==================== HEADER INCRUSTADO ==================== -->
+    <header class="site-header fixed top-0 left-0 right-0 text-white z-50 py-3" style="background: rgba(107, 63, 105, 0.95); backdrop-filter: blur(10px);">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <!-- Logo y nombre del sitio -->
+                <div class="flex items-center space-x-3 mb-3 md:mb-0">
+                    <div class="bg-light p-2 rounded-lg">
+                        <i class="fas fa-code text-primary text-xl"></i>
+                    </div>
+                    <div>
+                        <a href="index.html" class="text-xl font-bold hover:text-light transition">
+                            Portafolio de Evidencias
+                        </a>
+                        <p class="text-light text-xs">Frameworks</p>
+                    </div>
+                </div>
+
+                <!-- Navegación principal con rutas relativas (desde la raíz) -->
+                <nav class="w-full md:w-auto">
+                    <ul class="flex flex-wrap justify-center md:justify-end space-x-2">
+                        <li><a href="index.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center"><i class="fas fa-home mr-1"></i><span class="hidden md:inline">Inicio</span></a></li>
+                        <li><a href="unidades/unidad1.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center"><i class="fas fa-palette mr-1"></i><span class="hidden md:inline">Unidad 1</span></a></li>
+                        <li><a href="unidades/unidad2.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center"><i class="fas fa-server mr-1"></i><span class="hidden md:inline">Unidad 2</span></a></li>
+                        <li><a href="unidades/unidad3.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center"><i class="fas fa-shield-alt mr-1"></i><span class="hidden md:inline">Unidad 3</span></a></li>
+                        <li><a href="about.html" class="px-3 py-2 hover:bg-white/10 rounded-lg transition flex items-center"><i class="fas fa-info-circle mr-1"></i><span class="hidden md:inline">Acerca</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Espacio para el header fijo -->
+    <div class="header-spacer" style="height: 80px;"></div>
+
+    <!-- Contenedor principal -->
+    <main class="content-wrapper">
         <!-- Hero Section -->
         <section class="py-16 md:py-24 bg-gradient-to-r from-primary to-secondary text-white">
             <div class="container mx-auto px-4">
@@ -125,6 +154,11 @@
                                     <strong>Período:</strong><br>
                                     <span class="text-light">5° Cuatrimestre</span>
                                 </p>
+                                <p class="mb-3">
+                                    <i class="fas fa-university mr-2"></i>
+                                    <strong>Institución:</strong><br>
+                                    <span class="text-light">Universidad Tecnológica</span>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -160,7 +194,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Unidad 1 -->
                     <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
-                        <div class="h-56 overflow-hidden">
+                        <div class="h-48 overflow-hidden">
                             <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" 
                                  alt="Desarrollo Frontend" class="w-full h-full object-cover">
                         </div>
@@ -171,27 +205,21 @@
                                 </div>
                                 <div>
                                     <h3 class="text-xl font-bold text-primary">Unidad 1</h3>
-                                    <h4 class="text-lg font-semibold text-secondary">Proceso de Desarrollo de Frontend</h4>
+                                    <h4 class="text-lg font-semibold text-secondary">Frontend</h4>
                                 </div>
                             </div>
-                            <p class="text-gray-600 mb-6">
-                                Fundamentos, diseño e implementación de interfaces de usuario utilizando 
-                                frameworks modernos y principios de UX/UI.
+                            <p class="text-gray-600 mb-4 text-sm">
+                                Fundamentos, diseño e implementación de interfaces de usuario.
                             </p>
-                            <ul class="text-gray-600 text-sm space-y-1 mb-6">
-                                <li><i class="fas fa-check text-accent mr-2"></i>Fundamentos de Frontend</li>
-                                <li><i class="fas fa-check text-accent mr-2"></i>Diseño y Prototipado</li>
-                                <li><i class="fas fa-check text-accent mr-2"></i>Saber Hacer #1 & #2</li>
-                            </ul>
-                            <a href="unidades/unidad1.html" class="bg-primary hover:bg-secondary text-white font-bold py-3 px-6 rounded-lg transition duration-300 w-full inline-block text-center">
-                                <i class="fas fa-external-link-alt mr-2"></i> Explorar Unidad
+                            <a href="unidades/unidad1.html" class="bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded-lg transition duration-300 w-full inline-block text-center">
+                                Explorar Unidad 1
                             </a>
                         </div>
                     </div>
                     
                     <!-- Unidad 2 -->
                     <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
-                        <div class="h-56 overflow-hidden">
+                        <div class="h-48 overflow-hidden">
                             <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1174&q=80" 
                                  alt="Desarrollo Backend" class="w-full h-full object-cover">
                         </div>
@@ -202,27 +230,21 @@
                                 </div>
                                 <div>
                                     <h3 class="text-xl font-bold text-primary">Unidad 2</h3>
-                                    <h4 class="text-lg font-semibold text-secondary">Proceso de Desarrollo de Backend</h4>
+                                    <h4 class="text-lg font-semibold text-secondary">Backend</h4>
                                 </div>
                             </div>
-                            <p class="text-gray-600 mb-6">
-                                Desarrollo de lógica del servidor, gestión de bases de datos, 
-                                APIs y arquitectura de aplicaciones web.
+                            <p class="text-gray-600 mb-4 text-sm">
+                                Desarrollo de lógica del servidor, APIs y bases de datos.
                             </p>
-                            <ul class="text-gray-600 text-sm space-y-1 mb-6">
-                                <li><i class="fas fa-check text-accent mr-2"></i>Fundamentos de Backend</li>
-                                <li><i class="fas fa-check text-accent mr-2"></i>Diseño de APIs REST</li>
-                                <li><i class="fas fa-check text-accent mr-2"></i>Bases de datos SQL/NoSQL</li>
-                            </ul>
-                            <a href="unidades/unidad2.html" class="bg-primary hover:bg-secondary text-white font-bold py-3 px-6 rounded-lg transition duration-300 w-full inline-block text-center">
-                                <i class="fas fa-external-link-alt mr-2"></i> Explorar Unidad
+                            <a href="unidades/unidad2.html" class="bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded-lg transition duration-300 w-full inline-block text-center">
+                                Explorar Unidad 2
                             </a>
                         </div>
                     </div>
                     
                     <!-- Unidad 3 -->
                     <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden">
-                        <div class="h-56 overflow-hidden">
+                        <div class="h-48 overflow-hidden">
                             <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" 
                                  alt="Seguridad Web" class="w-full h-full object-cover">
                         </div>
@@ -233,267 +255,58 @@
                                 </div>
                                 <div>
                                     <h3 class="text-xl font-bold text-primary">Unidad 3</h3>
-                                    <h4 class="text-lg font-semibold text-secondary">Seguridad e Implementación</h4>
+                                    <h4 class="text-lg font-semibold text-secondary">Seguridad</h4>
                                 </div>
                             </div>
-                            <p class="text-gray-600 mb-6">
-                                Principios de seguridad web, implementación en producción, 
-                                hosting y despliegue de aplicaciones web.
+                            <p class="text-gray-600 mb-4 text-sm">
+                                Principios de seguridad web e implementación en producción.
                             </p>
-                            <ul class="text-gray-600 text-sm space-y-1 mb-6">
-                                <li><i class="fas fa-check text-accent mr-2"></i>Seguridad en aplicaciones</li>
-                                <li><i class="fas fa-check text-accent mr-2"></i>Implementación y despliegue</li>
-                                <li><i class="fas fa-check text-accent mr-2"></i>Hosting y producción</li>
-                            </ul>
-                            <a href="unidades/unidad3.html" class="bg-primary hover:bg-secondary text-white font-bold py-3 px-6 rounded-lg transition duration-300 w-full inline-block text-center">
-                                <i class="fas fa-external-link-alt mr-2"></i> Explorar Unidad
+                            <a href="unidades/unidad3.html" class="bg-primary hover:bg-secondary text-white font-bold py-2 px-4 rounded-lg transition duration-300 w-full inline-block text-center">
+                                Explorar Unidad 3
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+    </main>
 
-        <!-- Metodología -->
-        <section class="py-16 bg-gradient-to-r from-accent/10 to-light/20">
-            <div class="container mx-auto px-4">
-                <div class="max-w-4xl mx-auto text-center">
-                    <h2 class="text-3xl font-bold text-primary mb-12">Metodología del Portafolio</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="bg-white rounded-xl shadow-md p-6">
-                            <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-clipboard-check text-primary text-2xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-secondary mb-3">Evidencias de Aprendizaje</h3>
-                            <p class="text-gray-600">Cada unidad contiene proyectos y actividades que demuestran la aplicación de conocimientos.</p>
-                        </div>
-                        
-                        <div class="bg-white rounded-xl shadow-md p-6">
-                            <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-laptop-code text-primary text-2xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-secondary mb-3">Desarrollo Práctico</h3>
-                            <p class="text-gray-600">Implementación real de conceptos mediante el desarrollo de una aplicación web completa.</p>
-                        </div>
-                        
-                        <div class="bg-white rounded-xl shadow-md p-6">
-                            <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-rocket text-primary text-2xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-secondary mb-3">Despliegue en Producción</h3>
-                            <p class="text-gray-600">Publicación del portafolio en hosting para demostrar habilidades de implementación real.</p>
-                        </div>
-                    </div>
+    <!-- ==================== FOOTER INCRUSTADO ==================== -->
+    <footer class="bg-primary text-white py-4 mt-8">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <!-- Derechos y créditos -->
+                <div class="pt-2">
+                    <p class="text-sm text-light/80 mb-1">
+                        &copy; <span id="current-year"></span> Portafolio de Evidencias Académicas
+                    </p>
+                    <p class="text-xs text-light/60">
+                        <span id="last-update"></span>
+                    </p>
+                </div>
+                
+                <!-- Enlaces rápidos en el footer con rutas relativas (desde la raíz) -->
+                <div class="mt-3 text-xs">
+                    <a href="index.html" class="text-light/80 hover:text-light mx-2">Inicio</a>
+                    <a href="unidades/unidad1.html" class="text-light/80 hover:text-light mx-2">Unidad 1</a>
+                    <a href="unidades/unidad2.html" class="text-light/80 hover:text-light mx-2">Unidad 2</a>
+                    <a href="unidades/unidad3.html" class="text-light/80 hover:text-light mx-2">Unidad 3</a>
+                    <a href="about.html" class="text-light/80 hover:text-light mx-2">Acerca</a>
                 </div>
             </div>
-        </section>
-    </div>
-    
-    <!-- Loader que maneja la carga de componentes -->
+        </div>
+    </footer>
+    <!-- ==================== FIN DEL FOOTER ==================== -->
+
+    <!-- Script solo para año y fecha de actualización -->
     <script>
-        // Configuración del sitio
-        const SiteConfig = {
-            basePath: './',
-            components: ['header', 'footer'],
-            
-            // Detectar si estamos en una subcarpeta
-            detectBasePath() {
-                const path = window.location.pathname;
-                if (path.includes('/unidades/')) {
-                    return '../';
-                }
-                return './';
-            },
-            
-            // Cargar un componente
-            async loadComponent(name) {
-                try {
-                    const basePath = this.basePath;
-                    const response = await fetch(`${basePath}includes/${name}.html`);
-                    if (!response.ok) {
-                        throw new Error(`Error cargando ${name}: ${response.status}`);
-                    }
-                    return await response.text();
-                } catch (error) {
-                    console.error(`Error cargando componente ${name}:`, error);
-                    // Componente de respaldo
-                    if (name === 'header') {
-                        return `
-                            <header style="background: #6B3F69; color: white; padding: 1rem;">
-                                <div style="max-width: 1200px; margin: 0 auto;">
-                                    <a href="${this.basePath}index.html" style="color: white; text-decoration: none; font-size: 1.5rem; font-weight: bold;">
-                                        Portafolio de Evidencias
-                                    </a>
-                                </div>
-                            </header>
-                            <div style="height: 80px;"></div>
-                        `;
-                    }
-                    if (name === 'footer') {
-                        return `
-                            <footer style="background: #6B3F69; color: white; padding: 2rem; margin-top: 3rem;">
-                                <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
-                                    <p>&copy; ${new Date().getFullYear()} Portafolio de Evidencias</p>
-                                </div>
-                            </footer>
-                        `;
-                    }
-                    return '';
-                }
-            },
-            
-            // Cargar todos los componentes
-            async loadComponents() {
-                const components = {};
-                
-                for (const name of this.components) {
-                    components[name] = await this.loadComponent(name);
-                }
-                
-                return components;
-            },
-            
-            // Construir la página completa
-            async buildPage() {
-                // Ocultar pantalla de carga
-                document.getElementById('loading-screen').style.display = 'none';
-                
-                // Mostrar contenido de la página
-                const pageContent = document.getElementById('page-content');
-                
-                // Cargar componentes
-                const { header, footer } = await this.loadComponents();
-                
-                // Insertar header al inicio del body
-                document.body.insertAdjacentHTML('afterbegin', header);
-                
-                // Mostrar contenido de la página
-                pageContent.style.display = 'block';
-                
-                // Insertar footer al final del body
-                document.body.insertAdjacentHTML('beforeend', footer);
-                
-                // Cargar CSS personalizado
-                await this.loadCustomCSS();
-                
-                // Cargar scripts adicionales
-                await this.loadScripts();
-                
-                // Inicializar funcionalidades
-                this.initFunctionalities();
-            },
-            
-            // Cargar CSS personalizado
-            async loadCustomCSS() {
-                try {
-                    const link = document.createElement('link');
-                    link.rel = 'stylesheet';
-                    link.href = `${this.basePath}assets/css/main.css`;
-                    document.head.appendChild(link);
-                } catch (error) {
-                    console.error('Error cargando CSS:', error);
-                }
-            },
-            
-            // Cargar scripts adicionales
-            async loadScripts() {
-                const scripts = [
-                    `${this.basePath}assets/js/config.js`,
-                    `${this.basePath}assets/js/main.js`
-                ];
-                
-                for (const src of scripts) {
-                    try {
-                        const script = document.createElement('script');
-                        script.src = src;
-                        script.async = true;
-                        document.body.appendChild(script);
-                    } catch (error) {
-                        console.error(`Error cargando script ${src}:`, error);
-                    }
-                }
-            },
-            
-            // Inicializar funcionalidades
-            initFunctionalities() {
-                // Header scroll effect
-                window.addEventListener('scroll', function() {
-                    const header = document.querySelector('.site-header');
-                    if (header) {
-                        if (window.scrollY > 50) {
-                            header.classList.add('scrolled');
-                        } else {
-                            header.classList.remove('scrolled');
-                        }
-                    }
-                });
-                
-                // Resaltar enlace activo en navbar
-                const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-                const navLinks = document.querySelectorAll('nav a');
-                
-                navLinks.forEach(link => {
-                    const linkHref = link.getAttribute('href');
-                    if (linkHref === currentPage || 
-                        (currentPage === 'index.html' && linkHref === 'index.html')) {
-                        link.classList.add('nav-active');
-                        link.setAttribute('aria-current', 'page');
-                    }
-                });
-                
-                // Smooth scroll para enlaces internos
-                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                    anchor.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        const targetId = this.getAttribute('href');
-                        if (targetId !== '#') {
-                            const targetElement = document.querySelector(targetId);
-                            if (targetElement) {
-                                targetElement.scrollIntoView({
-                                    behavior: 'smooth',
-                                    block: 'start'
-                                });
-                            }
-                        }
-                    });
-                });
-                
-                // Animaciones al hacer scroll
-                const observerOptions = {
-                    threshold: 0.1,
-                    rootMargin: '0px 0px -50px 0px'
-                };
-                
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('fade-in');
-                        }
-                    });
-                }, observerOptions);
-                
-                // Observar elementos para animación
-                document.querySelectorAll('.bg-white.rounded-xl').forEach(el => {
-                    observer.observe(el);
-                });
-                
-                console.log('Portafolio Framework cargado correctamente');
-            }
-        };
-        
-        // Inicializar cuando el DOM esté listo
-        document.addEventListener('DOMContentLoaded', async function() {
-            // Detectar ruta base
-            SiteConfig.basePath = SiteConfig.detectBasePath();
-            
-            // Construir página
-            await SiteConfig.buildPage();
-        });
-        
-        // Manejar errores de carga
-        window.addEventListener('error', function(e) {
-            console.error('Error global:', e.error);
-        });
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        const lastMod = new Date(document.lastModified);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('last-update').textContent = 'Última actualización: ' + lastMod.toLocaleDateString('es-ES', options);
     </script>
+    
+    <!-- Scripts adicionales (opcional, solo si los necesitas) -->
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
